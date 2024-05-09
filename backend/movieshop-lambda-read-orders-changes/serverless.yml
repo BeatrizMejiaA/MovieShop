@@ -1,0 +1,22 @@
+service: movieshop-lambda-read-orders-changes
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: nodejs16.x
+  stage: movieshop-nl-dev
+  region: eu-central-1
+  environment:
+    CB_DYNAMO_DB_MERCHANTS: ${ssm:${self:custom.stage}-movieshop-orders}
+    CB_DYNAMO_DB_PENDENT_ORDERS: ${ssm:${self:custom.stage}-movieshop-pendentorders}
+
+functions:
+  read_message:
+    handler: handler.read
+    layers:
+      - arn:aws:lambda:sa-east-1:637423312381:layer:movieshop-libutils:1
+    role: ${ssm:${self:custom.stage}-movieshop-read-order-role}
+    events:
+      - sqs: ${ssm:${self:custom.stage}-movieshop-orders-queue}
+custom:
+    stage: ${opt:stage, self:provider.stage}

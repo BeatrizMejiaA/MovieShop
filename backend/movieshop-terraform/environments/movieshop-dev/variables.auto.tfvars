@@ -1,0 +1,8 @@
+environment = "movieshop-nl-dev"
+movieshop_region = "eu-central-1"
+email_sender = "no-reply@movieshop.com"
+template_email_change_password = "movieshop_template_change_user_password_en"
+template_email_new_password = "movieshop_template_new_password_user"
+template_email_merchant_change_password = "movieshop_template_change_merchant_password_en"
+template_email_merchant_new_password = "movieshop_template_new_password_merchant"
+template_email_order_status_changed = "movieshop_template_new_order_status"

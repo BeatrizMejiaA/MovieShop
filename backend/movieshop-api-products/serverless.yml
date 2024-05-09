@@ -1,0 +1,81 @@
+service: movieshop-products-api
+
+provider:
+  apiGateway:
+    shouldStartNameWithService: true
+  name: aws
+  runtime: nodejs16.x
+  stage: movieshop-nl-dev
+  region: eu-central-1
+  environment:
+    CB_DYNAMO_DB_PRODUCTS: ${ssm:${self:custom.stage}-movieshop-products}
+    CB_STAGE: ${opt:stage, self:provider.stage}
+    CB_SERVICE: ${self:service}
+    CB_JWT_SECRET: ${ssm:${self:custom.stage}-jwt-secret}
+
+custom:
+    allowed-headers:
+      - Content-Type
+      - X-Amz-Date
+      - Authorization
+      - X-Api-Key
+      - X-Amz-Security-Token
+      - X-Amz-User-Agent
+      - X-Cowabunga
+    stage: ${opt:stage, self:provider.stage}
+    region: ${opt:region, self:provider.region}
+package:
+  patterns:
+    - 'node_modules/**'
+
+functions:
+
+  create_product:
+    role: ${ssm:${self:custom.stage}-products-role}
+    handler: products/create.create
+    layers:
+      - arn:aws:lambda:sa-east-1:637423312381:layer:movieshop-libutils:1
+    events:
+      - http:
+          path: merchants/{id}/products
+          method: post
+          cors: true
+
+  get_product:
+    role: ${ssm:${self:custom.stage}-products-role}
+    handler: products/get.get
+    events:
+      - http:
+          path: merchants/{id}/{idProduct}
+          method: get
+          cors: true
+
+  authorizer:
+    handler: products/authorizer.authorizer
+
+  update_product:
+    role: ${ssm:${self:custom.stage}-products-role}
+    handler: products/update.update
+    events:
+      - http:
+          path: merchants/{id}/products/{idProduct}
+          method: put
+          cors: true
+
+  delete_product:
+    role: ${ssm:${self:custom.stage}-products-role}
+    handler: products/delete.delete
+    events:
+      - http:
+          path: merchants/{id}/products/{idProduct}
+          method: delete
+          cors: true
+
+  list_product:
+    role: ${ssm:${self:custom.stage}-products-role}
+    handler: products/list.list
+    events:
+      - http:
+          path: merchants/{id}/products
+          method: get
+          cors: true

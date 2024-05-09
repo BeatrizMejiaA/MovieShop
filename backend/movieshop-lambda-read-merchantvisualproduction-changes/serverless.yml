@@ -1,0 +1,22 @@
+service: movieshop-lambda-read-merchant-changes
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: nodejs16.x
+  stage: movieshop-nl-dev
+  region: eu-central-1
+  environment:
+    CB_DYNAMO_DB_VISUALPRODUCTIONS: ${ssm:${self:custom.stage}-movieshop-visualproductions}
+    CB_DYNAMO_DB_MERCHANTVISUALPRODUCTION: ${ssm:${self:custom.stage}-movieshop-merchantvisualproduction}
+
+functions:
+  read_message:
+    handler: handler.read
+    layers:
+      - arn:aws:lambda:sa-east-1:637423312381:layer:movieshop-libutils:1
+    role: ${ssm:${self:custom.stage}-movieshop-read-merchants-role}
+    events:
+      - sqs: ${ssm:${self:custom.stage}-movieshop-merchant-queue}
+custom:
+    stage: ${opt:stage, self:provider.stage}

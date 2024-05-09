@@ -1,0 +1,96 @@
+# Welcome to Serverless!
+#
+# This file is the main config file for your service.
+# It's very minimal at this point and uses default values.
+# You can always add more config options for more control.
+# We've included some commented out config examples here.
+# Just uncomment any of them to get that config option.
+#
+# For full config options, check the docs:
+#    docs.serverless.com
+#
+# Happy Coding!
+
+service: movieshop-visualproductions-api
+
+provider:
+  apiGateway:
+    shouldStartNameWithService: true
+  name: aws
+  runtime: nodejs16.x
+  stage: movieshop-nl-dev
+  region: eu-central-1
+  environment:
+    CB_DYNAMO_DB_VISUALPRODUCTIONS: ${ssm:${self:custom.stage}-movieshop-visualproductions}
+    CB_STAGE: ${opt:stage, self:provider.stage}
+    CB_SERVICE: ${self:service}
+    CB_JWT_SECRET: ${ssm:${self:custom.stage}-jwt-secret}
+
+custom:
+    allowed-headers:
+      - Content-Type
+      - X-Amz-Date
+      - Authorization
+      - X-Api-Key
+      - X-Amz-Security-Token
+      - X-Amz-User-Agent
+      - X-Cowabunga
+    stage: ${opt:stage, self:provider.stage}
+    region: ${opt:region, self:provider.region}
+
+functions:
+
+  # create_visualproduction:
+  #   role: ${ssm:${self:custom.stage}-visualproductions-role}
+  #   handler: visualproductions/create.create
+  #   events:
+  #     - http:
+  #         path: merchants/{id}/visualproductions
+  #         method: post
+  #         cors: true
+
+  get_visualproduction:
+    role: ${ssm:${self:custom.stage}-visualproductions-role}
+    handler: visualproductions/get.get
+    events:
+      - http:
+          path: visualproductions/{idVisualProduction}
+          method: get
+          cors: true
+
+  # get_visualproduction_by_merchant:
+  #   role: ${ssm:${self:custom.stage}-visualproductions-role}
+  #   handler: visualproductions/getbymerchant.get
+  #   events:
+  #     - http:
+  #         path: merchants/{id}/visualproductions/{idVisualProduction}
+  #         method: get
+  #         cors: true
+
+
+  # update_visualproduction:
+  #   role: ${ssm:${self:custom.stage}-visualproductions-role}
+  #   handler: visualproductions/update.update
+  #   events:
+  #     - http:
+  #         path: merchants/{id}/visualproductions/{idVisualProduction}
+  #         method: put
+  #         cors: true
+
+  # delete_visualproduction:
+  #   role: ${ssm:${self:custom.stage}-visualproductions-role}
+  #   handler: visualproductions/delete.delete
+  #   events:
+  #     - http:
+  #         path: merchants/{id}/visualproductions/{idVisualProduction}
+  #         method: delete
+  #         cors: true
+
+  # list_visualproductions:
+  #   role: ${ssm:${self:custom.stage}-visualproductions-role}
+  #   handler: visualproductions/list.list
+  #   events:
+  #     - http:
+  #         path: merchants/{id}/visualproductions
+  #         method: get
+  #         cors: true

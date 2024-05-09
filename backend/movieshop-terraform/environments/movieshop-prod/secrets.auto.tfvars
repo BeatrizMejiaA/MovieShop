@@ -1,0 +1,1 @@
+jwt_secret = "Lnc/8OotUNEXKH44vsFVUeZ/2o7Wsp9rktUQ0nAc/Q0="

@@ -1,0 +1,94 @@
+# Welcome to Serverless!
+#
+# This file is the main config file for your service.
+# It's very minimal at this point and uses default values.
+# You can always add more config options for more control.
+# We've included some commented out config examples here.
+# Just uncomment any of them to get that config option.
+#
+# For full config options, check the docs:
+#    docs.serverless.com
+#
+# Happy Coding!
+
+service: movieshop-wishlist-api
+
+provider:
+  apiGateway:
+    shouldStartNameWithService: true
+  name: aws
+  runtime: nodejs16.x
+  stage: movieshop-nl-dev
+  region: eu-central-1
+  environment:
+    CB_DYNAMO_DB_WISHLIST: ${ssm:${self:custom.stage}-movieshop-wishlist}
+    CB_STAGE: ${opt:stage, self:provider.stage}
+    CB_SERVICE: ${self:service}
+    CB_JWT_SECRET: ${ssm:${self:custom.stage}-jwt-secret}
+
+custom:
+    allowed-headers:
+      - Content-Type
+      - X-Amz-Date
+      - Authorization
+      - X-Api-Key
+      - X-Amz-Security-Token
+      - X-Amz-User-Agent
+      - X-Cowabunga
+    stage: ${opt:stage, self:provider.stage}
+    region: ${opt:region, self:provider.region}
+package:
+  patterns:
+    - 'node_modules/**'
+
+functions:
+
+  create_wishlist:
+    role: ${ssm:${self:custom.stage}-wishlist-role}
+    handler: wishlist/create.create
+    layers:
+      - arn:aws:lambda:sa-east-1:637423312381:layer:movieshop-libutils:1
+    events:
+      - http:
+          path: users/{id}/wishlist
+          method: post
+          cors: true
+
+  get_wishlist:
+    role: ${ssm:${self:custom.stage}-wishlist-role}
+    handler: wishlist/get.get
+    events:
+      - http:
+          path: users/{id}/{idWishlist}
+          method: get
+          cors: true
+
+  authorizer:
+    handler: wishlist/authorizer.authorizer
+
+  update_wishlist:
+    role: ${ssm:${self:custom.stage}-wishlist-role}
+    handler: wishlist/update.update
+    events:
+      - http:
+          path: users/{id}/wishlist/{idWishlist}
+          method: put
+          cors: true
+
+  delete_wishlist:
+    role: ${ssm:${self:custom.stage}-wishlist-role}
+    handler: wishlist/delete.delete
+    events:
+      - http:
+          path: users/{id}/wishlist/{idWishlist}
+          method: delete
+          cors: true
+
+  list_wishlist:
+    role: ${ssm:${self:custom.stage}-wishlist-role}
+    handler: wishlist/list.list
+    events:
+      - http:
+          path: users/{id}/wishlist
+          method: get
+          cors: true
