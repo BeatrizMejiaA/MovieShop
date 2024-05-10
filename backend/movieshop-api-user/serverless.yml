@@ -38,7 +38,7 @@ functions:
     role: ${ssm:${self:custom.stage}-users-role}
     handler: users/create.create
     layers:
-      - arn:aws:lambda:eu-central-1:637423312381:layer:movieshop-libutils:1
+      - arn:aws:lambda:eu-central-1:637423312381:layer:movieshop-libutils:2
     events:
       - http:
           path: users

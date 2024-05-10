@@ -7,19 +7,10 @@ const dynamoDb = new AWS.DynamoDB.DocumentClient();
 module.exports.update = (event, context, callback) => {
 
   const timestamp = new Date().getTime();
+  console.log(event)
   const data = JSON.parse(event.body);
-
-  // validation
-  if (typeof data.name !== 'string' || typeof data.password !== 'string') {
-    console.error('Fail validating user data');
-    callback(null, {
-      statusCode: 400,
-      headers: { 'Content-Type': 'text/plain' },
-      body: 'Not possible to update user.',
-    });
-    return;
-  }
-
+  console.log(data)
+ 
   const params = {
     TableName: process.env.CB_DYNAMO_DB_USERS,
     Key: {
@@ -49,7 +40,7 @@ module.exports.update = (event, context, callback) => {
       ':updatedAt': timestamp,
     },
     UpdateExpression: 'SET #name = :name, #middleName = :middleName, #lastName = :lastName, ' + 
-                      '#email = :email, #mobile = :mobile ,#address1 = :address1, address2 = :address2, zipCode = :zipCode'+
+                      '#mobile = :mobile, #address1 = :address1, #address2 = :address2, #zipCode = :zipCode, '+
                       '#city = :city, #state = :state, updatedAt = :updatedAt',
     ReturnValues: 'ALL_NEW',
   };

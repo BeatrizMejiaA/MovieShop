@@ -121,7 +121,7 @@ module.exports.create = async (event, context, callback) => {
 
   try{
     const data1 = await dynamoDb.put(params).promise();
-    const emailParams = generateEmailParams(data.name, data.email.toLowerCase(), JSON.stringify(novaSenha));
+    const emailParams = generateEmailParams(data.name, data.id.toLowerCase(), JSON.stringify(novaSenha));
     ses.sendTemplatedEmail(emailParams, async (err, data2) => {
       if (err) {
         const probs_context = MOVIESHOP.create_context(lambda,dynamoDb,process.env.CB_STAGE, 'en', 'send_new_user_email_error', 401,event.path);

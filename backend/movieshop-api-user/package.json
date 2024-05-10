@@ -3056,7 +3056,8 @@
     }
   },
   "devDependencies": {
-    "aws-sdk": "^2.828.0"
+    "aws-sdk": "^2.1616.0",
+    "serverless-plugin-include-dependencies": "^6.0.0"
   },
   "dependencies": {
     "jsonwebtoken": "^9.0.2"

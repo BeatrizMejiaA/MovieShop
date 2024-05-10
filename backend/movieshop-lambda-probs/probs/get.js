@@ -22,7 +22,7 @@ module.exports.get = (event, context, callback) => {
     console.log(ids);
     console.log("3");
   const params = {
-    TableName: process.env.UGO_DYNAMO_DB_PROBS,
+    TableName: process.env.MOVIESHOP_DYNAMO_DB_PROBS,
     Key: {
       id: ids
     },
