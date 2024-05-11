@@ -30,10 +30,7 @@ module.exports.login = (event, context, callback) => {
     },
   };
 
-  // fetch todo from the database
   dynamoDb.get(params, (error, result) => {
-    // handle potential errors
-    // handle potential errors
     if (error) {
       callback(null, {
         statusCode: 200,
@@ -72,8 +69,6 @@ module.exports.login = (event, context, callback) => {
         console.log(verify);
 
         if (result.Item.password !== verify){
-  
-
 
           const loginError = {
             login: false,

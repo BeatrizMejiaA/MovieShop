@@ -5,20 +5,12 @@ const AWS = require('aws-sdk'); // eslint-disable-line import/no-extraneous-depe
 const dynamoDb = new AWS.DynamoDB.DocumentClient();
 
 module.exports.update = (event, context, callback) => {
+
   const timestamp = new Date().getTime();
+  console.log(event)
   const data = JSON.parse(event.body);
-
-  // validation
-  if (typeof data.name !== 'string' || typeof data.password !== 'string') {
-    console.error('Not possible to validate entry point data');
-    callback(null, {
-      statusCode: 400,
-      headers: { 'Content-Type': 'text/plain' },
-      body: 'Impossible to change user.',
-    });
-    return;
-  }
-
+  console.log(data)
+ 
   const params = {
     TableName: process.env.CB_DYNAMO_DB_MERCHANTS,
     Key: {
@@ -28,7 +20,8 @@ module.exports.update = (event, context, callback) => {
       '#name': 'name',
       '#middleName': 'middleName',
       '#lastName': 'lastName',
-      '#email': 'email',
+      '#mobile': 'mobile',
+      '#emailPaypal': 'emailPaypal',
       '#address1': 'address1',
       '#address2': 'address2',
       '#zipCode': 'zipCode',
@@ -39,7 +32,8 @@ module.exports.update = (event, context, callback) => {
       ':name': data.name,
       ':middleName': data.middleName,
       ':lastName': data.lastName,
-      ':email': data.email,
+      ':mobile': data.mobile, 
+      ':emailPaypal': data.emailPaypal,     
       ':address1': data.address1,
       ':address2': data.address2,
       ':zipCode': data.zipCode,
@@ -48,7 +42,7 @@ module.exports.update = (event, context, callback) => {
       ':updatedAt': timestamp,
     },
     UpdateExpression: 'SET #name = :name, #middleName = :middleName, #lastName = :lastName, ' + 
-                      '#email = :email, #address1 = :address1, address2 = :address2, zipCode = :zipCode'+
+                      '#mobile = :mobile, #emailPaypal = :emailPaypal, #address1 = :address1, #address2 = :address2, #zipCode = :zipCode, '+
                       '#city = :city, #state = :state, updatedAt = :updatedAt',
     ReturnValues: 'ALL_NEW',
   };

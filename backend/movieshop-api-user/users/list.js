@@ -16,7 +16,7 @@ module.exports.list = (event, context, callback) => {
     TableName: process.env.CB_DYNAMO_DB_USERS,
     FilterExpression: "#name = :name AND lastName = :lastName AND birthDate = :birthDate",
     ExpressionAttributeValues: {
-      ":name": names,
+      ":name": name,
       ":lastName": lastName,
       ":birthDate": birthDate,
     },

@@ -40,8 +40,11 @@ function generateEmailParams (name,email,password) {
 module.exports.create = async (event, context, callback) => {
   console.log("AAAAAAAAAAAAAAAAAAAAAAAA")
   const timestamp = new Date().getTime();
+  console.log(context);
   const data = JSON.parse(event.body);
+  console.log(event);
   const cont = event.requestContext.stage;
+  console.log(cont);
   const startIndex = cont.indexOf('-')+1;
   const endIndex = cont.indexOf('-',5)+1;
   console.log("BBBBBBBBBBBBBBBBBBB")
@@ -49,9 +52,12 @@ module.exports.create = async (event, context, callback) => {
   
   var senha = data.password;
   var novaSenha = crypto.createHash(DADOS_CRIPTOGRAFAR.algoritmo).update(JSON.stringify(senha)).digest(DADOS_CRIPTOGRAFAR.tipo)
+  console.log(novaSenha);
   if (senha !== data.repeatpass){
     const probs_context = MOVIESHOP.create_context(lambda,dynamoDb,process.env.CB_STAGE, 'en', 'passwords_not_equal', 401,event.path);
+    console.log(probs_context)
     const response = await MOVIESHOP.create_error_message(probs_context);
+    console.log(response)
     callback(null, response);
     return;
   }
@@ -64,6 +70,7 @@ module.exports.create = async (event, context, callback) => {
       name: data.name,
       middleName: data.middleName,
       lastName: data.lastName,
+
       mobile: data.mobile,
       city: data.city,
       state: data.state,
@@ -77,6 +84,7 @@ module.exports.create = async (event, context, callback) => {
       updatedAt: timestamp,
     },
   };
+  console.log(params);
 
   console.log("DDDDDDDDDDDDDDDDDDDDDDDd")
   try{
@@ -86,14 +94,16 @@ module.exports.create = async (event, context, callback) => {
       if (err) {
         console.log("1111111111111111")
         const probs_context = MOVIESHOP.create_context(lambda,dynamoDb,process.env.CB_STAGE, 'en', 'send_new_user_email_error', 401,event.path);
+        console.log(probs_context)
         const error_lam = await MOVIESHOP.create_error_message(probs_context);
+        console.log(error_lam);
       } else {
         console.log("2222222")
         const probs_context = MOVIESHOP.create_context(lambda,dynamoDb,process.env.CB_STAGE, 'en', 'send_new_user_email_success', 201,event.path);
         console.log("2222222aaaabbbbbbbb")
         console.log(probs_context)
         const error_lam = await MOVIESHOP.create_error_message(probs_context);
-        console.log("2222222aaaa")
+        console.log(error_lam);
       }
     });
 
@@ -101,6 +111,7 @@ module.exports.create = async (event, context, callback) => {
   } catch (err) {
     console.log("DDDDDEEEEEEE")
     const probs_context = MOVIESHOP.create_context(lambda,dynamoDb,process.env.CB_STAGE, 'en', 'insert_generic_user_error', 400,event.path);
+    console.log(probs_context)
     const error_lam = await MOVIESHOP.create_error_message(probs_context);
     callback(null, error_lam);
   }

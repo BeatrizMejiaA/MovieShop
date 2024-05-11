@@ -4,8 +4,6 @@ const crypto = require("crypto")
 const MOVIESHOP = require('movieshop-libutils'); 
 const AWS = require('aws-sdk'); 
 
-const GENERIC_USER = 'GENERIC_USER';
-
 const DADOS_CRIPTOGRAFAR = {
   algoritmo : "sha256",
   tipo : "hex"
@@ -39,40 +37,8 @@ function generateEmailParams (name,email,password) {
   return params
 }
 
-async function getError (language,id,status) {
-
-
-    return await new Promise((success,error) => {
-
-      var lparams = {
-        FunctionName: 'movieshop-lambda-probs-'+ process.env.CB_STAGE + '-getprob',
-        InvocationType: 'RequestResponse',
-        LogType: 'Tail',
-        Payload: JSON.stringify('{"id" : "' + id + '","language" : "' + language + '"}')
-      }; 
-
-      lambda.invoke(lparams,function(err, lambdadata){
-        if (err){
-            error(err);
-        } else {
-          console.log(lambdadata);
-          const payloadBody = JSON.parse(lambdadata.Payload);
-          const response = {
-            statusCode: status,
-            headers: { 
-              'Content-Type': 'application/problem+json',
-            },
-            body: payloadBody.body,
-          };
-            success(response);
-        }
-        
-      });
-    });
-}
-
 module.exports.create = async (event, context, callback) => {
-
+  console.log("AAAAAAAAAAAAAAAAAAAAAAAA")
   const timestamp = new Date().getTime();
   console.log(context);
   const data = JSON.parse(event.body);
@@ -81,7 +47,7 @@ module.exports.create = async (event, context, callback) => {
   console.log(cont);
   const startIndex = cont.indexOf('-')+1;
   const endIndex = cont.indexOf('-',5)+1;
-
+  console.log("BBBBBBBBBBBBBBBBBBB")
   const stage_country = cont.substring(startIndex,endIndex);
   
   var senha = data.password;
@@ -95,14 +61,16 @@ module.exports.create = async (event, context, callback) => {
     callback(null, response);
     return;
   }
+
+  console.log("CCCCCCCCCCCCCCCCCCCCCCCCC")
   const params = {
     TableName: process.env.CB_DYNAMO_DB_MERCHANTS,
     Item: {
-      id: stage_country.toUpperCase() + data.countryId,
+      id: data.id,
       name: data.name,
       middleName: data.middleName,
       lastName: data.lastName,
-      email: data.email,
+      emailPaypal: data.emailPaypal,
       mobile: data.mobile,
       city: data.city,
       state: data.state,
@@ -112,35 +80,42 @@ module.exports.create = async (event, context, callback) => {
       birthDate: data.birthDate,
       photo: data.photo,
       password: novaSenha,
-      personType: GENERIC_USER,
       createdAt: timestamp,
       updatedAt: timestamp,
     },
   };
   console.log(params);
 
+  console.log("DDDDDDDDDDDDDDDDDDDDDDDd")
   try{
     const data1 = await dynamoDb.put(params).promise();
     const emailParams = generateEmailParams(data.name, data.id.toLowerCase(), JSON.stringify(novaSenha));
     ses.sendTemplatedEmail(emailParams, async (err, data2) => {
       if (err) {
+        console.log("1111111111111111")
         const probs_context = MOVIESHOP.create_context(lambda,dynamoDb,process.env.CB_STAGE, 'en', 'send_new_user_email_error', 401,event.path);
         console.log(probs_context)
         const error_lam = await MOVIESHOP.create_error_message(probs_context);
         console.log(error_lam);
       } else {
+        console.log("2222222")
         const probs_context = MOVIESHOP.create_context(lambda,dynamoDb,process.env.CB_STAGE, 'en', 'send_new_user_email_success', 201,event.path);
+        console.log("2222222aaaabbbbbbbb")
         console.log(probs_context)
         const error_lam = await MOVIESHOP.create_error_message(probs_context);
         console.log(error_lam);
       }
     });
+
+
   } catch (err) {
+    console.log("DDDDDEEEEEEE")
     const probs_context = MOVIESHOP.create_context(lambda,dynamoDb,process.env.CB_STAGE, 'en', 'insert_generic_user_error', 400,event.path);
     console.log(probs_context)
     const error_lam = await MOVIESHOP.create_error_message(probs_context);
     callback(null, error_lam);
   }
+  console.log("EEEEEEEEEEEEEEEEEEEEEEEE")
   const response = {
       statusCode: 200,
       headers: {

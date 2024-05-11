@@ -27,8 +27,9 @@ module.exports.create = (event, context, callback) => {
     var pwErroWishBaseDeDados = {id: "en_insert_generic_wishlist_error", type: "https://ot5a2rcbb3.execute-api.eu-central-1.amazonaws.com/movieshop-nl-dev/probs/en_insert_generic_wishlist_error", title: "Error trying to insert wishlist to database",detail: "Impossible to insert wishlist to database, please try later or contact administrator",language: "en"};
     loginMessages.push(pwErroWishBaseDeDados);    
 
-    var pwErroProductBaseDeDados = {id: "en_insert_generic_product_error", type: "https://ot5a2rcbb3.execute-api.eu-central-1.amazonaws.com/movieshop-nl-dev/probs/en_insert_generic_wishlist_error", title: "Error trying to insert product to database",detail: "Impossible to insert product to database, please try later or contact administrator",language: "en"};
+    var pwErroProductBaseDeDados = {id: "en_insert_generic_product_error", type: "https://ot5a2rcbb3.execute-api.eu-central-1.amazonaws.com/movieshop-nl-dev/probs/en_insert_generic_product_error", title: "Error trying to insert product to database",detail: "Impossible to insert product to database, please try later or contact administrator",language: "en"};
     loginMessages.push(pwErroProductBaseDeDados);    
+
 
     var genericErrorBaseDeDados = {id: "en_generic_error", type: "https://ot5a2rcbb3.execute-api.eu-central-1.amazonaws.com/movieshop-nl-dev/probs/en_generic_error", title: "Ocorreu um erro generico",detail: "Ocorreu um erro generico, por favor tente mais tarde ou contate o administrador",language: "en"};
     loginMessages.push(genericErrorBaseDeDados); 
@@ -44,6 +45,10 @@ module.exports.create = (event, context, callback) => {
 
     var genericObligatoryTypeBaseDeDados = {id: "en_order_obligatory_type", type: "https://ot5a2rcbb3.execute-api.eu-central-1.amazonaws.com/movieshop-nl-dev/probs/en_order_obligatory_type", title: "Obligatorie types",detail: "Choose a listed status below",language: "en"};
     loginMessages.push(genericObligatoryTypeBaseDeDados);
+
+    var genericObligatoryProductTypeBaseDeDados = {id: "en_product_obligatory_type", type: "https://ot5a2rcbb3.execute-api.eu-central-1.amazonaws.com/movieshop-nl-dev/probs/en_product_obligatory_type", title: "Obligatorie types",detail: "Missing fields",language: "en"};
+    loginMessages.push(genericObligatoryProductTypeBaseDeDados);
+   
 
     var genericObligatoryTypeBaseDeDados = {id: "en_visualproduction_obligatory_type", type: "https://ot5a2rcbb3.execute-api.eu-central-1.amazonaws.com/movieshop-nl-dev/probs/en_visualproduction_obligatory_type", title: "Obligatorie types",detail: "Choose a listed status below",language: "en"};
     loginMessages.push(genericObligatoryTypeBaseDeDados);

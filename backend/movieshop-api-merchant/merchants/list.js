@@ -6,7 +6,7 @@ const dynamoDb = new AWS.DynamoDB.DocumentClient();
 
 module.exports.list = (event, context, callback) => {
 
-  const names  = event.multiValueQueryStringParameters.names[0];
+  const names  = event.multiValueQueryStringParameters.name[0];
   const lastName  = event.multiValueQueryStringParameters.lastName[0];
   //const city  = event.multiValueQueryStringParameters.city[0];
   const birthDate  = event.multiValueQueryStringParameters.birthDate[0];
@@ -14,14 +14,14 @@ module.exports.list = (event, context, callback) => {
 
   var params = {
     TableName: process.env.CB_DYNAMO_DB_MERCHANTS,
-    FilterExpression: "#names = :names AND lastName = :lastName AND birthDate = :birthDate",
+    FilterExpression: "#name = :name AND lastName = :lastName AND birthDate = :birthDate",
     ExpressionAttributeValues: {
-      ":names": names,
+      ":name": name,
       ":lastName": lastName,
       ":birthDate": birthDate,
     },
     ExpressionAttributeNames: {
-      "#names": "name"
+      "#name": "name"
     }
   };
 

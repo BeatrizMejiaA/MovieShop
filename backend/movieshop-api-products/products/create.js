@@ -10,7 +10,8 @@ const dynamoDb = new AWS.DynamoDB.DocumentClient();
 
 const PRODUCT_PREFIX = 'PRD-';
 
-const required_fields = ["id","products"]
+
+const required_fields = ["name","photos","price","shippingPrice"]
 
 async function getError (language,id,status,instance,obligatoryFields,requiredTypes) {
 
@@ -115,20 +116,6 @@ async function validateProductItem(data,path){
     return result
   }
   
-  if (!required_types.includes(data.type)){
-    missing_types = required_types
-    console.log("zzzz4")
-    const error_lam = await getError("en", "order_obligatory_type",400,path,[],missing_types);
-    console.log("zzzzz5")
-    let result = {
-      valid:false,
-      errors: error_lam
-  
-    }
-    console.log("zzzzzzz6")
-    console.log(result)
-    return result
-  }
   console.log("zzz")
   console.log(obligatory_fields)
   console.log(missing_types)
@@ -167,12 +154,16 @@ async function createProductItem(data,path){
       }
       return result2
     }
-    
+
+
     const timestamp = new Date().getTime();
     console.log("Ola10");
     let productItem = {
       id: PRODUCT_PREFIX + AWS.util.uuid.v4().toUpperCase(),
-      product: data.product,
+      name: data.name,
+      photos: data.photos,
+      price: data.price,
+      shippingPrice: data.shippingPrice,
       createdAt: timestamp,
     }
     console.log("Ola11");
@@ -185,7 +176,7 @@ async function createProductItem(data,path){
     return result2;
   } catch (err) {
     console.log("ola10002341213123")
-    const error_lam = await getError("en", "insert_generic_wishlist_error",500,path,[],[]);
+    const error_lam = await getError("en", "insert_generic_product_error",500,path,[],[]);
     let resulterr = {
       productItem:null,
       errors: error_lam

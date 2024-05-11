@@ -111,7 +111,7 @@ module.exports.changepw = (event, context, callback) => {
               ReturnValues: 'ALL_NEW',
             };
           
-            // update the todo in the database
+            // update the merchant in the database
             dynamoDb.update(updateparams, (error, result) => {
               // handle potential errors
               if (error) {

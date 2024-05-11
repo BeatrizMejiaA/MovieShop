@@ -12,13 +12,17 @@ const dynamoDb = new AWS.DynamoDB.DocumentClient();
 
 module.exports.changepw = (event, context, callback) => {
 
+  console.log("1");
   const timestamp = new Date().getTime();
+
   const data = JSON.parse(event.body);
   //First verify if retype match
+  console.log("2");
   if (data.password !== data.repeatpass){
 
+    console.log("3");
     const loginError = {
-      message: 'Password not match',
+      message: 'Password does not match',
       status: 'invalid',
     };
 
@@ -35,6 +39,7 @@ module.exports.changepw = (event, context, callback) => {
     return;
   }
 
+  console.log("4");
   const params = {
     TableName: process.env.CB_DYNAMO_DB_USERS,
     Key: {
@@ -59,6 +64,7 @@ module.exports.changepw = (event, context, callback) => {
         return;
       } else {
 
+        console.log("6");
         if (JSON.stringify(result) === '{}') {
           console.error(error);
           callback(null, {
@@ -73,6 +79,7 @@ module.exports.changepw = (event, context, callback) => {
         }
         else 
         {
+          console.log("7");
           const oldpw = crypto.createHash(DADOS_CRIPTOGRAFAR.algoritmo).update(JSON.stringify(data.oldPassword)).digest(DADOS_CRIPTOGRAFAR.tipo);
 
           if (oldpw !== result.Item.password){
@@ -82,7 +89,7 @@ module.exports.changepw = (event, context, callback) => {
                 'Access-Control-Allow-Origin': '*',
                 'Access-Control-Allow-Credentials': false,
               },
-              body: 'Invalid seurity code',
+              body: 'Invalid secure code',
             });
             return;
           } else {

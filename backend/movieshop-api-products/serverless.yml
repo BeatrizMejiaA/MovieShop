@@ -34,7 +34,7 @@ functions:
     role: ${ssm:${self:custom.stage}-products-role}
     handler: products/create.create
     layers:
-      - arn:aws:lambda:sa-east-1:637423312381:layer:movieshop-libutils:1
+      - arn:aws:lambda:eu-central-1:637423312381:layer:movieshop-libutils:2
     events:
       - http:
           path: merchants/{id}/products
@@ -44,18 +44,19 @@ functions:
   get_product:
     role: ${ssm:${self:custom.stage}-products-role}
     handler: products/get.get
+    layers:
+      - arn:aws:lambda:eu-central-1:637423312381:layer:movieshop-libutils:2
     events:
       - http:
           path: merchants/{id}/{idProduct}
           method: get
           cors: true
 
-  authorizer:
-    handler: products/authorizer.authorizer
-
   update_product:
     role: ${ssm:${self:custom.stage}-products-role}
     handler: products/update.update
+    layers:
+      - arn:aws:lambda:eu-central-1:637423312381:layer:movieshop-libutils:2
     events:
       - http:
           path: merchants/{id}/products/{idProduct}
@@ -65,6 +66,8 @@ functions:
   delete_product:
     role: ${ssm:${self:custom.stage}-products-role}
     handler: products/delete.delete
+    layers:
+      - arn:aws:lambda:eu-central-1:637423312381:layer:movieshop-libutils:2
     events:
       - http:
           path: merchants/{id}/products/{idProduct}
@@ -74,6 +77,8 @@ functions:
   list_product:
     role: ${ssm:${self:custom.stage}-products-role}
     handler: products/list.list
+    layers:
+      - arn:aws:lambda:eu-central-1:637423312381:layer:movieshop-libutils:2
     events:
       - http:
           path: merchants/{id}/products

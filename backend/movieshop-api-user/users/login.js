@@ -69,9 +69,10 @@ module.exports.login = (event, context, callback) => {
         console.log(verify);
 
         if (result.Item.password !== verify){
+
           const loginError = {
             login: false,
-            message: 'Password not match',
+            message: 'Password does not match',
             user: data.id,
           };
     

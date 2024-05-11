@@ -1,17 +1,4 @@
-# Welcome to Serverless!
-#
-# This file is the main config file for your service.
-# It's very minimal at this point and uses default values.
-# You can always add more config options for more control.
-# We've included some commented out config examples here.
-# Just uncomment any of them to get that config option.
-#
-# For full config options, check the docs:
-#    docs.serverless.com
-#
-# Happy Coding!
-
-service: movieshop-merchantvisualproduction-api
+service: movieshop-merchantvisualproductions-api
 
 provider:
   apiGateway:
@@ -45,9 +32,9 @@ functions:
 
   create_merchantvisualproduction:
     role: ${ssm:${self:custom.stage}-merchantvisualproduction-role}
-    handler: merchantvisualproduction/create.create
+    handler: merchantvisualproductions/create.create
     layers:
-      - arn:aws:lambda:sa-east-1:637423312381:layer:movieshop-libutils:1
+      - arn:aws:lambda:sa-east-1:637423312381:layer:movieshop-libutils:2
     events:
       - http:
           path: merchants/{id}/merchantvisualproduction
@@ -56,19 +43,19 @@ functions:
 
   get_merchantvisualproduction:
     role: ${ssm:${self:custom.stage}-merchantvisualproduction-role}
-    handler: merchantvisualproduction/get.get
+    handler: merchantvisualproductions/get.get
     events:
       - http:
-          path: merchants/{id}/merchantvisualproduction/{idMerchantVisualProduction}
+          path: merchants/{id}/merchantvisualproductions/{idMerchantVisualProduction}
           method: get
           cors: true
 
   authorizer:
-    handler: merchantvisualproduction/authorizer.authorizer
+    handler: merchantvisualproductions/authorizer.authorizer
 
   update_merchantvisualproduction:
     role: ${ssm:${self:custom.stage}-merchantvisualproduction-role}
-    handler: merchantvisualproduction/update.update
+    handler: merchantvisualproductions/update.update
     events:
       - http:
           path: merchants/{id}/merchantvisualproduction/{idMerchantVisualProduction}
@@ -77,19 +64,19 @@ functions:
 
   delete_merchantvisualproduction:
     role: ${ssm:${self:custom.stage}-merchantvisualproduction-role}
-    handler: merchantvisualproduction/delete.delete
+    handler: merchantvisualproductions/delete.delete
     events:
       - http:
-          path: merchants/{id}/merchantvisualproduction/{idMerchantVisualProduction}
+          path: merchants/{id}/merchantvisualproductions/{idMerchantVisualProduction}
           method: delete
           cors: true
 
   list_merchantvisualproduction:
     role: ${ssm:${self:custom.stage}-merchantvisualproduction-role}
-    handler: merchantvisualproduction/list.list
+    handler: merchantvisualproductions/list.list
     events:
       - http:
-          path: merchants/{id}/merchantvisualproduction
+          path: merchants/{id}/merchantvisualproductions
           method: get
           cors: true
 

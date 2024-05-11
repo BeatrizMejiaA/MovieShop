@@ -8,75 +8,13 @@ const lambda = new AWS.Lambda({ region: process.env.CB_REGION});
 
 const dynamoDb = new AWS.DynamoDB.DocumentClient();
 
-const WISHLIST_PREFIX = 'PRD-';
+const MOVIESHOP = require('movieshop-libutils'); 
 
 const exclusions = []
 
-const required_fields = ["id","products"]
+const required_fields = ["name","photos","price","shippingPrice"]
 
-
-async function getError (language,id,status,instance,obligatoryFields,requiredTypes) {
-
-  return await new Promise((success,error) => {
-
-    var lparams = {
-      FunctionName: 'movieshop-lambda-probs-'+ process.env.CB_STAGE + '-getprob',
-      InvocationType: 'RequestResponse',
-      LogType: 'Tail',
-      Payload: JSON.stringify('{"id" : "' + id + '","language" : "' + language + '"}')
-    
-    }; 
-    
-    console.log(lparams);
-    //"invalid_params":"[{}]"
-    lambda.invoke(lparams,function(err, lambdadata){
-      if (err){
-          error(err);
-      } else {
-        var payloadBody = JSON.parse(lambdadata.Payload);
-        console.log(payloadBody)
-        var extension;
-        if (obligatoryFields.length == 0 && requiredTypes.length == 0) {
-          console.log("aaaaaa1111")
-          extension = { status: status , instance: instance};
-        } else if (obligatoryFields.length > 0 && requiredTypes.length == 0){
-          console.log("bbbbbbb222222")
-          extension = { status: status , instance: instance,obligatory_fields:obligatoryFields};
-        } else if (obligatoryFields.length == 0 && requiredTypes.length >= 0){
-          console.log("ccccccccc3333333")
-          extension = { status: status , instance: instance,obligatory_types:requiredTypes};
-        } else if (obligatoryFields.length >= 0 && requiredTypes.length >= 0){
-          console.log("ccccccccc44444444")
-          extension = { status: status , instance: instance,obligatory_types:requiredTypes,obligatory_fields:obligatoryFields};
-        }
-        console.log("ccccccc")
-        console.log(extension)
-        console.log("ccccccc")
-        console.log(payloadBody.body)
-        console.log("ddddddd")
-        const newBody = Object.assign({}, JSON.parse(payloadBody.body),extension);
-        console.log("eeeeeeeee")
-        console.log(newBody)
-        console.log("ffffffffff")
-        var errors = {errors:[]}
-        console.log("ggggggggg")
-        errors.errors.push(newBody)
-        console.log("hhhhhhh")
-        console.log(JSON.stringify(errors))
-        const response = {
-          statusCode: status,
-          headers: { 
-            'Content-Type': 'application/problem+json',
-          },
-          body: JSON.stringify(errors),
-        };
-        console.log("ggggggggg")
-        success(response);
-      }
-      
-    });
-  });
-}
+const empty_fields = []
 
 async function validateProductItem(data,path){
   console.log("z")
@@ -90,65 +28,71 @@ async function validateProductItem(data,path){
     if (!required_fields.includes(key)){
       console.log("7777777")
       forbidden_fields.push(key);
+      console.log(key)
     }
   });
 
   if (forbidden_fields.length > 0){
-    const error_lam = await getError("en", "forbidden_field_for_object",400,path,exclusions,required_types);
+    console.log("7777777aaaaa")
+
+    const probs_context = MOVIESHOP.create_context_with_extension(lambda,dynamoDb,process.env.CB_STAGE, 'en', 'forbidden_field_for_object', 400,path,forbidden_fields,[]);
+    console.log(probs_context)
+    const response = await MOVIESHOP.create_error_message(probs_context);
+    console.log(response)  
+
     let result = {
       valid:false,
-      errors: error_lam
+      errors: response
     }
     console.log("zzzzzzz6")
     console.log(result)
+    console.log("zzzzzzz777777")
     return result
   }
 
   ////////
-  var empty_fields = [];
   Object.entries(data).forEach(async ([key, val]) => {
 
+    console.log("ggggggggggddddddddn1123123")
+    console.log(key)
+    console.log(val)
     if (val === ""){
-      empty_fields.push(key);
+      onsole.log("ggggggggggddddddddn1123123898989")
+      console.log(key)
+      if (!required_fields.includes(key)){
+        empty_fields.push(key);
+      }
     }
   });
 
   if (empty_fields.length > 0){
-    const error_lam = await getError("en", "empty_field",400,path,exclusions,empty_fields);
+    console.log("llllllllLLLLLLLLOOOOOOO")
+    const probs_context = MOVIESHOP.create_context_with_extension(lambda,dynamoDb,process.env.CB_STAGE, 'en', 'empty_field', 400,path,empty_fields,[]);
+    console.log(probs_context)
+    const response = await MOVIESHOP.create_error_message(probs_context);
+    console.log("JOJOJO")
     let result = {
       valid:false,
-      errors: error_lam
+      errors: response
     }
     console.log("zzzzzzz6")
     console.log(result)
     return result
   }
-  //////
 
-  if (typeof(data['type']) != "undefined" && !required_types.includes(data.type)){
-    missing_types = required_types
-    console.log("zzzz44")
-    const error_lam = await getError("en", "order_obligatory_type",400,path,[],missing_types);
-    console.log("zzzzz5")
-    let result = {
-      valid:false,
-      errors: error_lam
-  
-    }
-    console.log("zzzzzzz6")
-    console.log(result)
-    return result
-  }
   console.log("zzz")
   console.log(obligatory_fields)
   console.log(missing_types)
   if (obligatory_fields.length > 0 || missing_types.length > 0){
     console.log("zzzz42")
-    const error_lam = await getError("pt", "address_obligatory_fields",400,path,obligatory_fields,[]);
+    const probs_context = MOVIESHOP.create_context_with_extension(lambda,dynamoDb,process.env.CB_STAGE, 'en', 'address_obligatory_fields', 400,path,obligatory_fields,[]);
+    console.log(probs_context)
+    const response = await MOVIESHOP.create_error_message(probs_context);
+    console.log(response)  
     console.log("zzzzz5")
     let result = {
       valid:false,
-      errors: error_lam
+      errors: response
   
     }
     console.log("zzzzzzz6")
@@ -168,6 +112,7 @@ async function validateProductItem(data,path){
 async function updateProductItem(theProductItem,data,path){
 
   const validation = await validateProductItem(data,path)
+  console.log("gggggporta")
   if (!validation.valid){
     let result2 = {
       productItem:null,
@@ -202,15 +147,17 @@ async function updateProductItem(theProductItem,data,path){
   console.log("us7")
   if (invalidFields.length > 0 && invalidFields.length != exclusions.length){
     console.log("us8")
-      const error_lam = await getError("en", "address_obligatory_fields",404,path,exclusions,[]);
-      console.log("us9")
-      let result3 = {
-        wishlistItem:null,
-        errors: error_lam
+    const probs_context = MOVIESHOP.create_context_with_extension(lambda,dynamoDb,process.env.CB_STAGE, 'en', 'address_obligatory_fields', 400,path,exclusions,[]);
+    console.log(probs_context)
+    const response = await MOVIESHOP.create_error_message(probs_context);
+    console.log("us9")
+    let result3 = {
+      wishlistItem:null,
+      errors: response
 
-      }
-      console.log("us1000kj")
-      return result3;
+    }
+    console.log("us1000kj")
+    return result3;
   }
 
   if (addressLabel != ""){
@@ -256,9 +203,10 @@ module.exports.update = async (event, context, callback) => {
     console.log("x111")
     console.log(result)
     if (JSON.stringify(result) === '{}') {
-      console.log("4444");
-        const error_lam = await getError("en", "resource_not_found",404,event.path,[],[]);
-        console.log("5555");
+        console.log("4444");
+        const probs_context = MOVIESHOP.create_context(lambda,dynamoDb,process.env.CB_STAGE, 'en', 'resource_not_found', 400,path);
+        console.log(probs_context)
+        const error_lam = await MOVIESHOP.create_error_message(probs_context);
         callback(null, error_lam);
         console.log("6666");
         return;
@@ -277,21 +225,24 @@ module.exports.update = async (event, context, callback) => {
         console.log('qwe5')
         if (theProductItem.length == 0){
           console.log('qwe6')
-          const error_lam = await getError("en", "resource_not_found",404,event.path,[],[]);
+          const probs_context = MOVIESHOP.create_context(lambda,dynamoDb,process.env.CB_STAGE, 'en', 'resource_not_found', 400,path);
+          console.log(probs_context)
+          const error_lam = await MOVIESHOP.create_error_message(probs_context);
           callback(null, error_lam);
           return;
         }
         console.log('qwe7')
         console.log(theProductItem)
         console.log("a114")
-        const otherProductsListItems = result.Item.products;
+        const otherProductsListItems = result.Item.products.filter(s => s.id != event.pathParameters.idProduct);
         console.log("a1")
         const resultProductslist = await updateProductItem(theProductItem[0],data,event.path,[],[]);
         console.log("marcel")
         console.log("a3")
-        if (resultProductslist.errors.length == 0){
+        if (resultProductslist.errors.length === 0){
           console.log("a4")
           theProductItem = resultProductslist.productItem;
+          otherProductsListItems.push(theProductItem)
         } else {
 
 
@@ -310,7 +261,8 @@ module.exports.update = async (event, context, callback) => {
       }  
       console.log("a6")
 
-      result.Item.products.push(theProductItem);
+      result.Item.products = otherProductsListItems;
+      
       const params3 = {
         TableName: process.env.CB_DYNAMO_DB_PRODUCTS,
         Item: result.Item,
@@ -322,9 +274,11 @@ module.exports.update = async (event, context, callback) => {
         console.log("a8")
       } catch (err) {
         console.log("a9")
-          const error_lam = await getError("en", "insert_generic_product_error",400,event.path,[]);
-          console.log("a10")
-          callback(null, error_lam);
+        const probs_context = MOVIESHOP.create_context(lambda,dynamoDb,process.env.CB_STAGE, 'en', 'insert_generic_product_error', 400,path);
+        console.log(probs_context)
+        const error_lam = await MOVIESHOP.create_error_message(probs_context);
+        console.log("a10")
+        callback(null, error_lam);
       }
       const response = {
           statusCode: 200,
@@ -341,7 +295,9 @@ module.exports.update = async (event, context, callback) => {
 
   } catch (err) {
     console.log("a12")
-    const error_lam = await getError("pt", "insert_generic_products_error",400,event.path,[]);
+    const probs_context = MOVIESHOP.create_context(lambda,dynamoDb,process.env.CB_STAGE, 'en', 'insert_generic_product_error', 400,path);
+    console.log(probs_context)
+    const error_lam = await MOVIESHOP.create_error_message(probs_context);
     console.log("a13")
     console.log(error_lam)
     callback(null, error_lam);
