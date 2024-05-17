@@ -32,7 +32,8 @@ module.exports.read = async (event) => {
       //Lets add the merchant visual production to visual production for cqrc
     
       const visualproduction_merchant = message.newMvp
-
+      console.log("visualproduction_merchant")
+      console.log(visualproduction_merchant)
       for (const vp of visualproduction_merchant.visualproductions) {
 
         console.log("vipid")
@@ -86,25 +87,25 @@ module.exports.read = async (event) => {
             }
           } else {
 
-            console.log("yyyy111")
-            const data = JSON.parse(event.body);
-            console.log("yyyyy112")
-            console.log(data)
             console.log("yyyyy113")
             console.log(result)
             console.log("99999999")
     
             console.log('qwe4')
-
-            var theFilteredMerchant = result.Item.merchants.filter(s => s.id === visualproduction_merchant.merchant.id);
+            console.log(visualproduction_merchant.id)
+            var theFilteredMerchant = result.Item.merchants.filter(s => s.id === visualproduction_merchant.id);
 
             if (theFilteredMerchant.length == 0){
               console.log('yyyyyyqwe6')
-              result.Item.merchants.push(visualproduction_merchant.merchant)
+              const merchant = {
+                id: visualproduction_merchant.id,
+                products: vp.products
+              };
+              result.Item.merchants.push(merchant)
             } else {
-              theFilteredMerchant = visualproduction_merchant.merchant;
-              var theOthers = result.Item.merchants.filter(s => s.id != visualproduction_merchant.merchant.id);            
-              theOthers.push(visualproduction_merchant.merchant)
+              theFilteredMerchant[0].products = vp.products
+              var theOthers = result.Item.merchants.filter(s => s.id != visualproduction_merchant.id);            
+              theOthers.push(theFilteredMerchant[0])
               result.Item.merchants = theOthers;
             }
 

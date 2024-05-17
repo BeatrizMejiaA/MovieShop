@@ -33,6 +33,9 @@ module.exports.create = (event, context, callback) => {
     var pwErroVisualProductionBaseDeDados = {id: "en_insert_generic_visualproduction_error", type: "https://ot5a2rcbb3.execute-api.eu-central-1.amazonaws.com/movieshop-nl-dev/probs/en_insert_generic_visualproduction_error", title: "Error trying to insert visual production to database",detail: "Impossible to insert visual production to database, please try later or contact administrator",language: "en"};
     loginMessages.push(pwErroVisualProductionBaseDeDados);  
 
+    var pwErroVisualProductionAlreadyExistBaseDeDados = {id: "en_visualproduction_not_exists_error", type: "https://ot5a2rcbb3.execute-api.eu-central-1.amazonaws.com/movieshop-nl-dev/probs/en_visualproduction_not_exists_error", title: "Error trying to insert visual production already exists on database",detail: "Impossible to insert visual production already exists on database, please try later or contact administrator",language: "en"};
+    loginMessages.push(pwErroVisualProductionAlreadyExistBaseDeDados);  
+
     var genericErrorBaseDeDados = {id: "en_generic_error", type: "https://ot5a2rcbb3.execute-api.eu-central-1.amazonaws.com/movieshop-nl-dev/probs/en_generic_error", title: "Ocorreu um erro generico",detail: "Ocorreu um erro generico, por favor tente mais tarde ou contate o administrador",language: "en"};
     loginMessages.push(genericErrorBaseDeDados); 
 
