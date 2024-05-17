@@ -7,16 +7,17 @@ AWS.config.update({
 })
 const SNS = new AWS.SNS()
 module.exports.listen = async event => {
+  console.log(event)
   const snsPromisses = []
   for (const record of event.Records) {
     if (record.eventName === 'MODIFY' || record.eventName === 'INSERT'){
       const newImage = converter.unmarshall(record.dynamodb.NewImage)
       console.log('New',newImage)
-      const dinamo = converter.unmarshall(record.dynamodb)
-      console.log('dinamo',dinamo)
+      //const dinamo = converter.unmarshall(record.dynamodb)
+      //console.log('dinamo',dinamo)
       var consumerJson = {
-        type: 'check types of messages needed send message to update visual production',
-        newUser: newImage
+        type: 'new_mvp_message',
+        newMvp: newImage
       };
       snsPromisses.push(SNS.publish({
         TopicArn: process.env.SNS_MERCHANTVISUALPRODUCTION_NOTIFICATIONS_TOPIC,

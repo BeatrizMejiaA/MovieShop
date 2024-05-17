@@ -1,6 +1,5 @@
 
-service: movieshop-merchantvisualproduction-lambda-consumer
-frameworkVersion: '2'
+service: movieshop-merchantvp-consumer
 
 provider:
   name: aws

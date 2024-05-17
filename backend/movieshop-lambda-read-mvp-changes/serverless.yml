@@ -1,4 +1,4 @@
-service: movieshop-lambda-read-merchant-changes
+service: movieshop-lambda-read-mvp-changes
 frameworkVersion: '3'
 
 provider:
@@ -14,9 +14,9 @@ functions:
   read_message:
     handler: handler.read
     layers:
-      - arn:aws:lambda:sa-east-1:637423312381:layer:movieshop-libutils:1
-    role: ${ssm:${self:custom.stage}-movieshop-read-merchants-role}
+      - arn:aws:lambda:eu-central-1:637423312381:layer:movieshop-libutils:2
+    role: ${ssm:${self:custom.stage}-movieshop-read-merchantvisualproduction-role}
     events:
-      - sqs: ${ssm:${self:custom.stage}-movieshop-merchant-queue}
+      - sqs: ${ssm:${self:custom.stage}-movieshop-merchantvisualproduction-queue}
 custom:
     stage: ${opt:stage, self:provider.stage}
