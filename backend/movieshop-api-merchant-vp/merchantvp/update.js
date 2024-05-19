@@ -12,7 +12,7 @@ const MOVIESHOP = require('movieshop-libutils')
 
 const exclusions = []
 
-const required_fields = ["id","name","photo","apiId","source","products"]
+const required_fields = ["name","photo","apiId","source","products"]
 
 
 async function validateMerchantVisualProduct(data,path){

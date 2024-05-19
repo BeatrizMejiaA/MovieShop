@@ -27,7 +27,69 @@ module.exports.read = async (event) => {
     const message = JSON.parse(body.Message)
     const type = message.type
     
-    if (type === "new_mvp_message"){
+    if (type === "delete_mvp_message"){
+
+      const visualproduction_merchant = message.newMvp
+      const idMerchant = message.idMerchant
+      console.log("vipid2")
+      console.log(visualproduction_merchant.id)
+
+      const params = {
+        TableName: process.env.CB_DYNAMO_DB_VISUALPRODUCTIONS,
+        Key: {
+          id: visualproduction_merchant.id,
+        },
+      };
+
+      console.log("params")
+      console.log(params)
+      try {
+        console.log("x222")
+        console.log(params)
+        const result = await getItem(params) 
+
+        if (JSON.stringify(result) === '{}') {
+          console.log("pintu")
+        } else {
+          console.log("yyyyy113")
+          console.log(result)
+          console.log("99999999")
+  
+          console.log('qwe4')
+          console.log(visualproduction_merchant.id)
+          var theOthersMerchant = result.Item.merchants.filter(s => s.id != idMerchant);
+          console.log("theOthersMerchant")
+          console.log(theOthersMerchant)
+          result.Item.merchants = theOthersMerchant;
+          const params = {
+            TableName: process.env.CB_DYNAMO_DB_VISUALPRODUCTIONS,
+            Item: result.Item,
+          };
+
+          try{
+            console.log("yyyya7")
+            const data1 = await dynamoDb.put(params).promise();
+            console.log("yyyya8")
+          } catch (err) {
+            console.log("yyyya9")
+            const probs_context = MOVIESHOP.create_context(lambda,dynamoDb,process.env.CB_STAGE, 'en', 'insert_generic_visualproduction_error', 400,path);
+            console.log(probs_context)
+            const error_lam = await MOVIESHOP.create_error_message(probs_context);
+            console.log(error_lam)
+            console.log("a10")
+            return { message: 'MerchantVisualProduction read sqs queue for exclude executed with sucess!', event };
+          }
+        }
+      } catch (err) {
+        console.log("a12")
+        const probs_context = MOVIESHOP.create_context(lambda,dynamoDb,process.env.CB_STAGE, 'en', 'insert_generic_visualproduction_error', 500,path);
+        console.log(probs_context)
+        const error_lam = await MOVIESHOP.create_error_message(probs_context);
+        console.log(error_lam)
+        return { message: 'MerchantVisualProduction read sqs queue not executed with sucess!', event };
+      }
+
+    } else if (type === "new_mvp_message"){
 
       //Lets add the merchant visual production to visual production for cqrc
     
@@ -64,6 +126,10 @@ module.exports.read = async (event) => {
               TableName: process.env.CB_DYNAMO_DB_VISUALPRODUCTIONS,
               Item: {
                 id: vp.id,
+                apiId: vp.apiId,
+                name: vp.name,
+                photo: vp.photo,
+                createdAt: vp.createdAt,
                 merchants: [
                             {
                              id:  visualproduction_merchant.id,
@@ -102,11 +168,17 @@ module.exports.read = async (event) => {
                 products: vp.products
               };
               result.Item.merchants.push(merchant)
+              result.Item.apiId = vp.apiId
+              result.Item.name = vp.name
+              result.Item.photo = vp.photo
             } else {
               theFilteredMerchant[0].products = vp.products
               var theOthers = result.Item.merchants.filter(s => s.id != visualproduction_merchant.id);            
               theOthers.push(theFilteredMerchant[0])
               result.Item.merchants = theOthers;
+              result.Item.apiId = vp.apiId
+              result.Item.name = vp.name
+              result.Item.photo = vp.photo
             }
 
             const params = {
