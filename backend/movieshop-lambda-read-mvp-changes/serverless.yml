@@ -14,7 +14,7 @@ functions:
   read_message:
     handler: handler.read
     layers:
-      - arn:aws:lambda:eu-central-1:637423312381:layer:movieshop-libutils:2
+      - arn:aws:lambda:eu-central-1:637423312381:layer:movieshop-libutils:7
     role: ${ssm:${self:custom.stage}-movieshop-read-merchantvisualproduction-role}
     events:
       - sqs: ${ssm:${self:custom.stage}-movieshop-merchantvisualproduction-queue}

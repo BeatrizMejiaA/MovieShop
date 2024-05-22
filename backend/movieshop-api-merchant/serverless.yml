@@ -38,7 +38,7 @@ functions:
     role: ${ssm:${self:custom.stage}-merchants-role}
     handler: merchants/create.create
     layers:
-      - arn:aws:lambda:eu-central-1:637423312381:layer:movieshop-libutils:2
+      - arn:aws:lambda:eu-central-1:637423312381:layer:movieshop-libutils:7
     events:
       - http:
           path: merchants

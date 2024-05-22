@@ -34,7 +34,7 @@ functions:
     role: ${ssm:${self:custom.stage}-products-role}
     handler: products/create.create
     layers:
-      - arn:aws:lambda:eu-central-1:637423312381:layer:movieshop-libutils:2
+      - arn:aws:lambda:eu-central-1:637423312381:layer:movieshop-libutils:7
     events:
       - http:
           path: merchants/{id}/products
@@ -45,7 +45,7 @@ functions:
     role: ${ssm:${self:custom.stage}-products-role}
     handler: products/get.get
     layers:
-      - arn:aws:lambda:eu-central-1:637423312381:layer:movieshop-libutils:2
+      - arn:aws:lambda:eu-central-1:637423312381:layer:movieshop-libutils:7
     events:
       - http:
           path: merchants/{id}/{idProduct}
@@ -56,7 +56,7 @@ functions:
     role: ${ssm:${self:custom.stage}-products-role}
     handler: products/update.update
     layers:
-      - arn:aws:lambda:eu-central-1:637423312381:layer:movieshop-libutils:2
+      - arn:aws:lambda:eu-central-1:637423312381:layer:movieshop-libutils:7
     events:
       - http:
           path: merchants/{id}/products/{idProduct}
@@ -67,7 +67,7 @@ functions:
     role: ${ssm:${self:custom.stage}-products-role}
     handler: products/delete.delete
     layers:
-      - arn:aws:lambda:eu-central-1:637423312381:layer:movieshop-libutils:2
+      - arn:aws:lambda:eu-central-1:637423312381:layer:movieshop-libutils:7
     events:
       - http:
           path: merchants/{id}/products/{idProduct}
@@ -78,7 +78,7 @@ functions:
     role: ${ssm:${self:custom.stage}-products-role}
     handler: products/list.list
     layers:
-      - arn:aws:lambda:eu-central-1:637423312381:layer:movieshop-libutils:2
+      - arn:aws:lambda:eu-central-1:637423312381:layer:movieshop-libutils:7
     events:
       - http:
           path: merchants/{id}/products
