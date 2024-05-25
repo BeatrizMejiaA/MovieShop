@@ -1,0 +1,10 @@
+service: layers
+provider:
+  name: aws
+  runtime: nodejs16.x
+  region: eu-central-1
+layers:
+  movieshop-libutils:
+    path: movieshop-libutils
+    compatibleRuntimes:
+          - nodejs16.x

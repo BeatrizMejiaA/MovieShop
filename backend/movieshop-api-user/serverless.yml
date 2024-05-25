@@ -1,0 +1,115 @@
+
+service: movieshop-users-api
+
+provider:
+  apiGateway:
+    shouldStartNameWithService: true
+  name: aws
+  runtime: nodejs16.x
+  stage: movieshop-nl-dev
+  region: eu-central-1
+  environment:
+    CB_DYNAMO_DB_USERS: ${ssm:${self:custom.stage}-movieshop-users}
+    CB_STAGE: ${opt:stage, self:provider.stage}
+    CB_SERVICE: ${self:service}
+    EMAIL: ${ssm:${self:custom.stage}-email-sender}
+    CB_JWT_SECRET: ${ssm:${self:custom.stage}-jwt-secret}
+    CB_TEMPLATE_EMAIL_AS: ${ssm:${self:custom.stage}-template-email-change-password}
+    CB_TEMPLATE_EMAIL_NS: ${ssm:${self:custom.stage}-template-email-new-password}
+
+custom:
+    allowed-headers:
+      - Content-Type
+      - X-Amz-Date
+      - Authorization
+      - X-Api-Key
+      - X-Amz-Security-Token
+      - X-Amz-User-Agent
+      - X-Cowabunga
+    stage: ${opt:stage, self:provider.stage}
+    region: ${opt:region, self:provider.region}
+package:
+  patterns:
+    - 'node_modules/**'
+
+functions:
+
+  create_user:
+    role: ${ssm:${self:custom.stage}-users-role}
+    handler: users/create.create
+    layers:
+      - arn:aws:lambda:eu-central-1:637423312381:layer:movieshop-libutils:7
+    events:
+      - http:
+          path: users
+          method: post
+          cors: true
+
+  get_user:
+    role: ${ssm:${self:custom.stage}-users-role}
+    handler: users/get.get
+    events:
+      - http:
+          path: users/{id}
+          method: get
+          cors: true
+
+  changepw_user:
+    role: ${ssm:${self:custom.stage}-users-role}
+    handler: users/changepw.changepw
+    events:
+      - http:
+          path: users/change/password
+          method: post
+          authorizer: authorizer
+          cors: true
+  
+  login_user:
+    role: ${ssm:${self:custom.stage}-users-role}
+    handler: users/login.login
+    events:
+      - http:
+          path: users/login
+          method: post
+          cors: true
+
+  authorizer:
+    handler: users/authorizer.authorizer
+
+  update_user:
+    role: ${ssm:${self:custom.stage}-users-role}
+    handler: users/update.update
+    events:
+      - http:
+          path: users/{id}
+          method: put
+          cors: true
+
+  delete_user:
+    role: ${ssm:${self:custom.stage}-users-role}
+    handler: users/delete.delete
+    events:
+      - http:
+          path: users/{id}
+          method: delete
+          cors: true
+
+  list_users:
+    role: ${ssm:${self:custom.stage}-users-role}
+    handler: users/list.list
+    events:
+      - http:
+          path: users
+          method: get
+          cors: true
+            
+  send:
+    role: ${ssm:${self:custom.stage}-users-role}
+    handler: users/send.send
+    memorySize: 1024
+    timeout: 10
+    events:
+      - http:
+          path: users/new/password
+          method: post
+          cors: true

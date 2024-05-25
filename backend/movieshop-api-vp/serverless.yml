@@ -1,0 +1,50 @@
+service: movieshop-vp-api
+
+provider:
+  apiGateway:
+    shouldStartNameWithService: true
+  name: aws
+  runtime: nodejs16.x
+  stage: movieshop-nl-dev
+  region: eu-central-1
+  environment:
+    CB_DYNAMO_DB_VISUALPRODUCTIONS: ${ssm:${self:custom.stage}-movieshop-visualproductions}
+    CB_STAGE: ${opt:stage, self:provider.stage}
+    CB_SERVICE: ${self:service}
+    CB_JWT_SECRET: ${ssm:${self:custom.stage}-jwt-secret}
+
+custom:
+    allowed-headers:
+      - Content-Type
+      - X-Amz-Date
+      - Authorization
+      - X-Api-Key
+      - X-Amz-Security-Token
+      - X-Amz-User-Agent
+      - X-Cowabunga
+    stage: ${opt:stage, self:provider.stage}
+    region: ${opt:region, self:provider.region}
+
+functions:
+
+  get_visualproduction:
+    role: ${ssm:${self:custom.stage}-visualproductions-role}
+    handler: visualproductions/get.get
+    layers:
+      - arn:aws:lambda:eu-central-1:637423312381:layer:movieshop-libutils:7
+    events:
+      - http:
+          path: visualproductions/{id}
+          method: get
+          cors: true
+
+  search_visualproduction:
+    role: ${ssm:${self:custom.stage}-visualproductions-role}
+    handler: visualproductions/search.search
+    layers:
+      - arn:aws:lambda:eu-central-1:637423312381:layer:movieshop-libutils:7
+    events:
+      - http:
+          path: visualproductions/search
+          method: get
+          cors: true

@@ -1,0 +1,83 @@
+service: movieshop-orders-api
+
+provider:
+  apiGateway:
+    shouldStartNameWithService: true
+  name: aws
+  runtime: nodejs16.x
+  stage: movieshop-nl-dev
+  region: eu-central-1
+  environment:
+    CB_DYNAMO_DB_ORDERS: ${ssm:${self:custom.stage}-movieshop-orders}
+    CB_STAGE: ${opt:stage, self:provider.stage}
+    CB_SERVICE: ${self:service}
+    CB_JWT_SECRET: ${ssm:${self:custom.stage}-jwt-secret}
+
+custom:
+    allowed-headers:
+      - Content-Type
+      - X-Amz-Date
+      - Authorization
+      - X-Api-Key
+      - X-Amz-Security-Token
+      - X-Amz-User-Agent
+      - X-Cowabunga
+    stage: ${opt:stage, self:provider.stage}
+    region: ${opt:region, self:provider.region}
+
+functions:
+
+  create_order:
+    role: ${ssm:${self:custom.stage}-orders-role}
+    handler: orders/create.create
+    layers:
+      - arn:aws:lambda:eu-central-1:637423312381:layer:movieshop-libutils:7
+    events:
+      - http:
+          path: users/{id}/orders
+          method: post
+          cors: true
+
+  get_order:
+    role: ${ssm:${self:custom.stage}-orders-role}
+    handler: orders/get.get
+    layers:
+      - arn:aws:lambda:eu-central-1:637423312381:layer:movieshop-libutils:7
+    events:
+      - http:
+          path: users/{id}/orders/{idOrder}
+          method: get
+          cors: true
+
+  update_order:
+    role: ${ssm:${self:custom.stage}-orders-role}
+    handler: orders/update.update
+    layers:
+      - arn:aws:lambda:eu-central-1:637423312381:layer:movieshop-libutils:7
+    events:
+      - http:
+          path: users/{id}/orders/{idOrder}
+          method: put
+          cors: true
+
+  delete_order:
+    role: ${ssm:${self:custom.stage}-orders-role}
+    handler: orders/delete.delete
+    layers:
+      - arn:aws:lambda:eu-central-1:637423312381:layer:movieshop-libutils:7
+    events:
+      - http:
+          path: users/{id}/orders/{idOrder}
+          method: delete
+          cors: true
+
+  list_orders:
+    role: ${ssm:${self:custom.stage}-orders-role}
+    handler: orders/list.list
+    layers:
+      - arn:aws:lambda:eu-central-1:637423312381:layer:movieshop-libutils:7
+    events:
+      - http:
+          path: users/{id}/orders
+          method: get
+          cors: true

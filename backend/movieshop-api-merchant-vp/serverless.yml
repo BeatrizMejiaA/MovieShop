@@ -1,0 +1,87 @@
+service: movieshop-merchant-vp-api
+
+provider:
+  apiGateway:
+    shouldStartNameWithService: true
+  name: aws
+  runtime: nodejs16.x
+  stage: movieshop-nl-dev
+  region: eu-central-1
+  environment:
+    CB_DYNAMO_DB_MERCHANTVISUALPRODUCTION: ${ssm:${self:custom.stage}-movieshop-merchantvisualproduction}
+    CB_STAGE: ${opt:stage, self:provider.stage}
+    CB_SERVICE: ${self:service}
+    CB_JWT_SECRET: ${ssm:${self:custom.stage}-jwt-secret}
+
+custom:
+    allowed-headers:
+      - Content-Type
+      - X-Amz-Date
+      - Authorization
+      - X-Api-Key
+      - X-Amz-Security-Token
+      - X-Amz-User-Agent
+      - X-Cowabunga
+    stage: ${opt:stage, self:provider.stage}
+    region: ${opt:region, self:provider.region}
+package:
+  patterns:
+    - 'node_modules/**'
+
+functions:
+
+  create_merchantvp:
+    role: ${ssm:${self:custom.stage}-merchantvisualproduction-role}
+    handler: merchantvp/create.create
+    layers:
+      - arn:aws:lambda:eu-central-1:637423312381:layer:movieshop-libutils:7
+    events:
+      - http:
+          path: merchants/{id}/merchantvisualproduction
+          method: post
+          cors: true
+
+  get_merchantvp:
+    role: ${ssm:${self:custom.stage}-merchantvisualproduction-role}
+    handler: merchantvp/get.get
+    layers:
+      - arn:aws:lambda:eu-central-1:637423312381:layer:movieshop-libutils:7
+    events:
+      - http:
+          path: merchants/{id}/merchantvisualproduction/{idMerchantVisualProduction}
+          method: get
+          cors: true
+
+  update_merchantvp:
+    role: ${ssm:${self:custom.stage}-merchantvisualproduction-role}
+    handler: merchantvp/update.update
+    layers:
+      - arn:aws:lambda:eu-central-1:637423312381:layer:movieshop-libutils:7
+    events:
+      - http:
+          path: merchants/{id}/merchantvisualproduction/{idMerchantVisualProduction}
+          method: put
+          cors: true
+
+  delete_merchantvp:
+    role: ${ssm:${self:custom.stage}-merchantvisualproduction-role}
+    handler: merchantvp/delete.delete
+    layers:
+      - arn:aws:lambda:eu-central-1:637423312381:layer:movieshop-libutils:7
+    events:
+      - http:
+          path: merchants/{id}/merchantvisualproductions/{idMerchantVisualProduction}
+          method: delete
+          cors: true
+
+  list_merchantvp:
+    role: ${ssm:${self:custom.stage}-merchantvisualproduction-role}
+    handler: merchantvp/list.list
+    layers:
+      - arn:aws:lambda:eu-central-1:637423312381:layer:movieshop-libutils:7
+    events:
+      - http:
+          path: merchants/{id}/merchantvisualproductions
+          method: get
+          cors: true
+

@@ -1,0 +1,115 @@
+
+service: movieshop-merchant-api
+
+provider:
+  apiGateway:
+    shouldStartNameWithService: true
+  name: aws
+  runtime: nodejs16.x
+  stage: movieshop-nl-dev
+  region: eu-central-1
+  environment:
+    CB_DYNAMO_DB_MERCHANTS: ${ssm:${self:custom.stage}-movieshop-merchants}
+    CB_STAGE: ${opt:stage, self:provider.stage}
+    CB_SERVICE: ${self:service}
+    EMAIL: ${ssm:${self:custom.stage}-email-sender}
+    CB_JWT_SECRET: ${ssm:${self:custom.stage}-jwt-secret}
+    CB_TEMPLATE_EMAIL_AS: ${ssm:${self:custom.stage}-template-email-change-password}
+    CB_TEMPLATE_EMAIL_NS: ${ssm:${self:custom.stage}-template-email-new-password}
+
+custom:
+    allowed-headers:
+      - Content-Type
+      - X-Amz-Date
+      - Authorization
+      - X-Api-Key
+      - X-Amz-Security-Token
+      - X-Amz-User-Agent
+      - X-Cowabunga
+    stage: ${opt:stage, self:provider.stage}
+    region: ${opt:region, self:provider.region}
+package:
+  patterns:
+    - 'node_modules/**'
+
+functions:
+
+  create_merchant:
+    role: ${ssm:${self:custom.stage}-merchants-role}
+    handler: merchants/create.create
+    layers:
+      - arn:aws:lambda:eu-central-1:637423312381:layer:movieshop-libutils:7
+    events:
+      - http:
+          path: merchants
+          method: post
+          cors: true
+
+  get_merchant:
+    role: ${ssm:${self:custom.stage}-merchants-role}
+    handler: merchants/get.get
+    events:
+      - http:
+          path: merchants/{id}
+          method: get
+          cors: true
+
+  changepw_merchant:
+    role: ${ssm:${self:custom.stage}-merchants-role}
+    handler: merchants/changepw.changepw
+    events:
+      - http:
+          path: merchants/change/password
+          method: post
+          authorizer: authorizer
+          cors: true
+
+  login_merchant:
+    role: ${ssm:${self:custom.stage}-merchants-role}
+    handler: merchants/login.login
+    events:
+      - http:
+          path: merchants/login
+          method: post
+          cors: true
+
+  authorizer:
+    handler: merchants/authorizer.authorizer
+
+  update_merchant:
+    role: ${ssm:${self:custom.stage}-merchants-role}
+    handler: merchants/update.update
+    events:
+      - http:
+          path: merchants/{id}
+          method: put
+          cors: true
+
+  delete_merchant:
+    role: ${ssm:${self:custom.stage}-merchants-role}
+    handler: merchants/delete.delete
+    events:
+      - http:
+          path: merchants/{id}
+          method: delete
+          cors: true
+
+  list_merchants:
+    role: ${ssm:${self:custom.stage}-merchants-role}
+    handler: merchants/list.list
+    events:
+      - http:
+          path: merchants
+          method: get
+          cors: true      
+          
+  send:
+    role: ${ssm:${self:custom.stage}-merchants-role}
+    handler: merchants/send.send
+    memorySize: 1024
+    timeout: 10
+    events:
+      - http:
+          path: merchants/new/password
+          method: post
+          cors: true

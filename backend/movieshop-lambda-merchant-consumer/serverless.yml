@@ -1,0 +1,22 @@
+
+service: movieshop-merchant-lambda-consumer
+frameworkVersion: '2'
+
+provider:
+  name: aws
+  runtime: nodejs16.x
+
+# you can overwrite defaults here
+  stage: movieshop-nl-dev
+  region: eu-central-1
+
+functions:
+  stream_listener:
+    handler: handler.listen
+    role: ${ssm:${self:custom.stage}-merchants-stream-consumer-role}
+    events:
+      - stream: ${ssm:${self:custom.stage}-merchants-stream}
+    environment:
+      SNS_MERCHANT_NOTIFICATIONS_TOPIC: ${ssm:${self:custom.stage}-merchant-notifications-topic}
+custom:
+    stage: ${opt:stage, self:provider.stage}
