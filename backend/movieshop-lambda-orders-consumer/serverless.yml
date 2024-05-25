@@ -1,6 +1,5 @@
 
 service: movieshop-order-lambda-consumer
-frameworkVersion: '2'
 
 provider:
   name: aws

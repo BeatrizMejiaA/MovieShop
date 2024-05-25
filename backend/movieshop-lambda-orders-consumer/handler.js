@@ -11,12 +11,13 @@ module.exports.listen = async event => {
   for (const record of event.Records) {
     if (record.eventName === 'MODIFY' || record.eventName === 'INSERT'){
       const newImage = converter.unmarshall(record.dynamodb.NewImage)
+      //const oldImage = converter.unmarshall(record.dynamodb.OldImage)
       console.log('New',newImage)
       const dinamo = converter.unmarshall(record.dynamodb)
       console.log('dinamo',dinamo)
       var consumerJson = {
-        type: 'if status creates message type a or b or c',
-        newUser: newImage
+        type: 'order_change',
+        order: newImage
       };
       snsPromisses.push(SNS.publish({
         TopicArn: process.env.SNS_ORDER_NOTIFICATIONS_TOPIC,
