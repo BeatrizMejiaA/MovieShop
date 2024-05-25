@@ -6,44 +6,8 @@ const dynamoDb = new AWS.DynamoDB.DocumentClient();
 
 const lambda = new AWS.Lambda({ region: process.env.CB_REGION});
 
+const MOVIESHOP = require('movieshop-libutils'); 
 
-async function getError (language,id,status,instance) {
-
-  return await new Promise((success,error) => {
-
-    var lparams = {
-      FunctionName: 'movieshop-lambda-probs-'+ process.env.CB_STAGE + '-getprob',
-      InvocationType: 'RequestResponse',
-      LogType: 'Tail',
-      Payload: JSON.stringify('{"id" : "' + id + '","language" : "' + language + '"}')
-    
-    }; 
-    
-    console.log(lparams);
-    //"invalid_params":"[{}]"
-    lambda.invoke(lparams,function(err, lambdadata){
-      if (err){
-          error(err);
-      } else {
-        var payloadBody = JSON.parse(lambdadata.Payload);
-        var extension = { status: status , instance: instance};
-        const newBody = Object.assign({}, JSON.parse(payloadBody.body),extension);
-        console.log(newBody)
-        var errors = {errors:[]}
-        errors.errors.push(newBody)
-        const response = {
-          statusCode: status,
-          headers: { 
-            'Content-Type': 'application/problem+json',
-          },
-          body: JSON.stringify(errors),
-        };
-          success(response);
-      }
-      
-    });
-  });
-}
 
 async function getItem(params){
   try {
@@ -68,15 +32,19 @@ module.exports.get = async (event, context, callback) => {
   try {
     const result = await getItem(params);
     if (JSON.stringify(result) === '{}') {
-      const error_lam = await getError("en", "resource_not_found",404,event.path);
+      const probs_context = MOVIESHOP.create_context(lambda,dynamoDb,process.env.CB_STAGE, 'en', 'resource_not_found"', 404,event.path);
+      console.log(probs_context)
+      const error_lam = await MOVIESHOP.create_error_message(probs_context);
       callback(null, error_lam);
       return;
     } else {
 
-      const filteredOrders = result.Item.orders.filter(s => s.id === event.pathParameters.idSpace);
+      const filteredOrders = result.Item.orders.filter(s => s.id === event.pathParameters.idOrder);
 
       if (filteredOrders.length == 0){
-        const error_lam = await getError("en", "resource_not_found",404,event.path);
+        const probs_context = MOVIESHOP.create_context(lambda,dynamoDb,process.env.CB_STAGE, 'en', 'resource_not_found"', 404,event.path);
+        console.log(probs_context)
+        const error_lam = await MOVIESHOP.create_error_message(probs_context);
         callback(null, error_lam);
         return;
       }
@@ -93,8 +61,10 @@ module.exports.get = async (event, context, callback) => {
     }
   } catch (error) {
     console.error(error);
-    const error_lam = await getError("en", "generic_error",500,event.path);
-    callback(null, error_lam);
+      const probs_context = MOVIESHOP.create_context(lambda,dynamoDb,process.env.CB_STAGE, 'en', 'generic_error', 500,event.path);
+      console.log(probs_context)
+      const error_lam = await MOVIESHOP.create_error_message(probs_context);
+      callback(null, error_lam);
     return;
   }
 

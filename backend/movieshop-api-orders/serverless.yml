@@ -1,16 +1,3 @@
-# Welcome to Serverless!
-#
-# This file is the main config file for your service.
-# It's very minimal at this point and uses default values.
-# You can always add more config options for more control.
-# We've included some commented out config examples here.
-# Just uncomment any of them to get that config option.
-#
-# For full config options, check the docs:
-#    docs.serverless.com
-#
-# Happy Coding!
-
 service: movieshop-orders-api
 
 provider:
@@ -18,7 +5,7 @@ provider:
     shouldStartNameWithService: true
   name: aws
   runtime: nodejs16.x
-  stage: movieshop-ne-dev
+  stage: movieshop-nl-dev
   region: eu-central-1
   environment:
     CB_DYNAMO_DB_ORDERS: ${ssm:${self:custom.stage}-movieshop-orders}
@@ -40,45 +27,55 @@ custom:
 
 functions:
 
-  create_space:
+  create_order:
     role: ${ssm:${self:custom.stage}-orders-role}
     handler: orders/create.create
+    layers:
+      - arn:aws:lambda:eu-central-1:637423312381:layer:movieshop-libutils:7
     events:
       - http:
           path: users/{id}/orders
           method: post
           cors: true
 
-  get_space:
+  get_order:
     role: ${ssm:${self:custom.stage}-orders-role}
     handler: orders/get.get
+    layers:
+      - arn:aws:lambda:eu-central-1:637423312381:layer:movieshop-libutils:7
     events:
       - http:
-          path: users/{id}/orders/{idSpace}
+          path: users/{id}/orders/{idOrder}
           method: get
           cors: true
 
-  update_space:
+  update_order:
     role: ${ssm:${self:custom.stage}-orders-role}
     handler: orders/update.update
+    layers:
+      - arn:aws:lambda:eu-central-1:637423312381:layer:movieshop-libutils:7
     events:
       - http:
-          path: users/{id}/orders/{idSpace}
+          path: users/{id}/orders/{idOrder}
           method: put
           cors: true
 
-  delete_space:
+  delete_order:
     role: ${ssm:${self:custom.stage}-orders-role}
     handler: orders/delete.delete
+    layers:
+      - arn:aws:lambda:eu-central-1:637423312381:layer:movieshop-libutils:7
     events:
       - http:
-          path: users/{id}/orders/{idSpace}
+          path: users/{id}/orders/{idOrder}
           method: delete
           cors: true
 
   list_orders:
     role: ${ssm:${self:custom.stage}-orders-role}
     handler: orders/list.list
+    layers:
+      - arn:aws:lambda:eu-central-1:637423312381:layer:movieshop-libutils:7
     events:
       - http:
           path: users/{id}/orders

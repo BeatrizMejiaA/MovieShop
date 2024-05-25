@@ -22,7 +22,17 @@ module.exports.create = (event, context, callback) => {
     loginMessages.push(pwErroEquipmentBaseDeDados);   
 
     var pwErroVPBaseDeDados = {id: "en_insert_generic_visualproduction_error", type: "https://ot5a2rcbb3.execute-api.eu-central-1.amazonaws.com/movieshop-nl-dev/probs/en_insert_generic_space_error", title: "Error trying to insert visual production to database",detail: "Impossible to insert visual production to database, please try later or contact administrator",language: "en"};
-    loginMessages.push(pwErroVPBaseDeDados);    
+    loginMessages.push(pwErroVPBaseDeDados); 
+    
+    var pwErroOrderBaseDeDados = {id: "en_insert_generic_order_error", type: "https://ot5a2rcbb3.execute-api.eu-central-1.amazonaws.com/movieshop-nl-dev/probs/en_insert_generic_order_error", title: "Error trying to insert order to database",detail: "Impossible to insert order to database, please try later or contact administrator",language: "en"};
+    loginMessages.push(pwErroOrderBaseDeDados); 
+
+    var pwErroOrderNextValidStatus = {id: "en_valid_next_status_error", type: "https://ot5a2rcbb3.execute-api.eu-central-1.amazonaws.com/movieshop-nl-dev/probs/en_valid_next_status_error", title: "Error trying to insert order with an invalid status",detail: "Impossible to insert order to database, enter a valid status",language: "en"};
+    loginMessages.push(pwErroOrderNextValidStatus); 
+
+    var pwErroOrderFinished = {id: "en_ordered_finished_error", type: "https://ot5a2rcbb3.execute-api.eu-central-1.amazonaws.com/movieshop-nl-dev/probs/en_ordered_finished_error", title: "Order already finished",detail: "Impossible to insert order to database, already finished",language: "en"};
+    loginMessages.push(pwErroOrderFinished);
+    
 
     var pwErroWishBaseDeDados = {id: "en_insert_generic_wishlist_error", type: "https://ot5a2rcbb3.execute-api.eu-central-1.amazonaws.com/movieshop-nl-dev/probs/en_insert_generic_wishlist_error", title: "Error trying to insert wishlist to database",detail: "Impossible to insert wishlist to database, please try later or contact administrator",language: "en"};
     loginMessages.push(pwErroWishBaseDeDados);    
