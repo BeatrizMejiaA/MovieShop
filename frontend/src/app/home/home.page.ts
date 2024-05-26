@@ -1,19 +1,26 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-tab1',
-  templateUrl: 'tab1.page.html',
-  styleUrls: ['tab1.page.scss'],
+  selector: 'app-home',
+  templateUrl: 'home.page.html',
+  styleUrls: ['home.page.scss'],
 })
 export class Tab1Page {
   autocomplete: { input: string };
   movies: any[] = [];
   rows: any[] = [];
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private router: Router) {
     // Initialize autocomplete if needed
     this.autocomplete = { input: '' };
+  }
+  goToLogin() {
+    this.router.navigate(['/login']);
+  }
+  goToSignUp() {
+    this.router.navigate(['/signup']);
   }
 
   searchMovie() {
@@ -41,5 +48,8 @@ export class Tab1Page {
       result.push(array.slice(i, i + size));
     }
     return result;
+  }
+  navigateToProducts(movieId: string) {
+    this.router.navigate([`/movies/${movieId}/products`]);
   }
 }

@@ -1,0 +1,80 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Sign In</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid class="ion-padding">
+    <ion-row>
+      <ion-col size="12" size-md="8" offset-md="2" size-lg="6" offset-lg="3">
+        <form (ngSubmit)="signIn()">
+          <ion-item>
+            <ion-label position="floating">Email</ion-label>
+            <ion-input type="email" [(ngModel)]="signInData.id" name="email" required email></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="floating">Name</ion-label>
+            <ion-input type="text" [(ngModel)]="signInData.name" name="name" required></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="floating">Middle Name</ion-label>
+            <ion-input type="text" [(ngModel)]="signInData.middleName" name="middleName"></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="floating">Last Name</ion-label>
+            <ion-input type="text" [(ngModel)]="signInData.lastName" name="lastName" required></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="floating">Mobile</ion-label>
+            <ion-input type="tel" [(ngModel)]="signInData.mobile" name="mobile" required></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="floating">City</ion-label>
+            <ion-input type="text" [(ngModel)]="signInData.city" name="city" required></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="floating">State</ion-label>
+            <ion-input type="text" [(ngModel)]="signInData.state" name="state" required></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="floating">Zip Code</ion-label>
+            <ion-input type="text" [(ngModel)]="signInData.zipCode" name="zipCode" required></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="floating">Address</ion-label>
+            <ion-textarea [(ngModel)]="signInData.address1" name="address1" rows="3" required></ion-textarea>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="floating">Birth Date</ion-label>
+            <ion-input type="date" [(ngModel)]="signInData.birthDate" name="birthDate" required></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="floating">Password</ion-label>
+            <ion-input type="password" [(ngModel)]="signInData.password" name="password" required></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="floating">Repeat Password</ion-label>
+            <ion-input type="password" [(ngModel)]="signInData.repeatpass" name="repeatpass" required></ion-input>
+          </ion-item>
+
+          <ion-button type="submit" expand="block">Sign In</ion-button>
+        </form>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-item *ngIf="errorMessage" lines="none">
+    <ion-text color="danger">{{ errorMessage }}</ion-text>
+  </ion-item>
+</ion-content>

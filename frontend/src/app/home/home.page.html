@@ -18,11 +18,18 @@
     </ion-buttons>
 
     <ion-buttons slot="end">
-      <ion-button fill="solid">
+      <ion-button fill="solid" (click)="goToLogin()">
         <ion-icon slot="start" name="person-circle"></ion-icon>
         Login
 
       </ion-button>
+    </ion-buttons>
+      <ion-buttons slot="end">
+        <ion-button fill="solid" (click)="goToSignUp()">
+          <ion-icon slot="start" name="person-circle"></ion-icon>
+          Sign Up
+
+        </ion-button>
 
     </ion-buttons>
 
@@ -50,6 +57,9 @@
           <ion-card-content>
             ID: {{ movie.id }}<br>
             API ID: {{ movie.apiId }}
+            <ion-button expand="full" (click)="navigateToProducts(movie.id)">
+              More
+            </ion-button>
           </ion-card-content>
         </ion-card>
       </ion-col>
