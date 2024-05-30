@@ -1,16 +1,3 @@
-# Welcome to Serverless!
-#
-# This file is the main config file for your service.
-# It's very minimal at this point and uses default values.
-# You can always add more config options for more control.
-# We've included some commented out config examples here.
-# Just uncomment any of them to get that config option.
-#
-# For full config options, check the docs:
-#    docs.serverless.com
-#
-# Happy Coding!
-
 service: movieshop-pendentorders-api
 
 provider:
@@ -43,45 +30,10 @@ functions:
   list_pendentorders:
     role: ${ssm:${self:custom.stage}-pendentorders-role}
     handler: pendentorders/list.list
+    layers:
+      - arn:aws:lambda:eu-central-1:637423312381:layer:movieshop-libutils:7
     events:
       - http:
           path: merchants/{id}/pendentorders
           method: get
           cors: true
-
-  # get_visualproduction_by_merchant:
-  #   role: ${ssm:${self:custom.stage}-visualproductions-role}
-  #   handler: visualproductions/getbymerchant.get
-  #   events:
-  #     - http:
-  #         path: merchants/{id}/visualproductions/{idVisualProduction}
-  #         method: get
-  #         cors: true
-
-
-  # update_visualproduction:
-  #   role: ${ssm:${self:custom.stage}-visualproductions-role}
-  #   handler: visualproductions/update.update
-  #   events:
-  #     - http:
-  #         path: merchants/{id}/visualproductions/{idVisualProduction}
-  #         method: put
-  #         cors: true
-
-  # delete_visualproduction:
-  #   role: ${ssm:${self:custom.stage}-visualproductions-role}
-  #   handler: visualproductions/delete.delete
-  #   events:
-  #     - http:
-  #         path: merchants/{id}/visualproductions/{idVisualProduction}
-  #         method: delete
-  #         cors: true
-
-  # list_visualproductions:
-  #   role: ${ssm:${self:custom.stage}-visualproductions-role}
-  #   handler: visualproductions/list.list
-  #   events:
-  #     - http:
-  #         path: merchants/{id}/visualproductions
-  #         method: get
-  #         cors: true

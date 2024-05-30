@@ -55,12 +55,12 @@ module.exports.read = async (event) => {
                         TableName: process.env.CB_DYNAMO_DB_PENDENT_ORDERS,
                         Item: {
                           id: record.merchant.id,
-                          users: {
+                          users: [{
                             id: record.user.id,
                             orders: [
                               record
                             ],
-                          },
+                          }],
                         },
                       };
             
@@ -88,16 +88,46 @@ module.exports.read = async (event) => {
               
                       console.log('qwe4')
                       console.log(record)
+
+                      console.log("qwe5")
+
+                      console.log(JSON.stringify(result.Item))
+                      console.log('qwe5')
+                      console.log("record.user.id")
+                      console.log(record.user.id)
+                      console.log("record.user.id1")
+                      console.log(result.Item.users)
+                      console.log("record.user.id2")
                       var theUser = result.Item.users.filter(s => s.id === record.user.id);
-                      var theOtherOrders = result.Item.users.orders.filter(s => s.id != record.id);
+                      console.log('qwe6')
+                      console.log(theUser)
+                      console.log("record.user.id3")
+                      console.log(record)
+                      console.log("record.user.id4")
+                      if (theUser.length === 0) {
+                        const rawUser = {
+                          id: record.user.id,
+                          orders: [
+                          ],
+                        }
+                        theUser.push(rawUser)
+                      }
+                      console.log(theUser[0].orders)
+                      console.log("record.user.id5")
+                      var theOtherOrders = theUser[0].orders.filter(s => s.id != record.id)
+                      console.log('qwe7')
                       theOtherOrders.push(record)
-                      theUser.orders = theOtherOrders
+                      console.log('qwe8')
+                      theUser[0].orders = theOtherOrders
+                      console.log('qwe9')
 
                       var theOthersUsers = result.Item.users.filter(s => s.id != record.user.id);
 
                       console.log("theOthersMerchant")
                       console.log(theOthersUsers)
-                      theOthersUsers.push(theUser)
+                      console.log('qwe10')
+                      theOthersUsers.push(theUser[0])
+                      console.log('qwe11')
 
                       const params2 = {
                         TableName: process.env.CB_DYNAMO_DB_PENDENT_ORDERS,
@@ -106,7 +136,7 @@ module.exports.read = async (event) => {
                           users: theOthersUsers
                         },
                       };
-            
+                      console.log('qwe12')
                       try{
                         console.log("yyyya7")
                         const data1 = await dynamoDb.put(params2).promise();
