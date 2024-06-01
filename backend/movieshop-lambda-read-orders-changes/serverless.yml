@@ -8,7 +8,6 @@ provider:
   environment:
     CB_DYNAMO_DB_MERCHANTS: ${ssm:${self:custom.stage}-movieshop-orders}
     CB_DYNAMO_DB_PENDENT_ORDERS: ${ssm:${self:custom.stage}-movieshop-pendentorders}
-
 functions:
   read_msg:
     handler: handler.read
