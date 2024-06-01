@@ -3,6 +3,9 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { MovieProductsComponent } from './movie-products/movie-products.component';
 import { LoginComponent } from './login/login.component';
 import { SignInComponent } from './sign-in/sign-in.component';
+import { PartnerComponent } from './partner/partner.component';
+import { PartnerSignUpComponent } from './partner-sign-up/partner-sign-up.component';
+import { LoginPromptComponent } from './login-prompt/login-prompt.component';
 
 const routes: Routes = [
   {
@@ -17,7 +20,10 @@ const routes: Routes = [
   },
   { path: 'movies/:id/products', component: MovieProductsComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'signup', component: SignInComponent }
+  { path: 'signup', component: SignInComponent },
+  { path: 'partner', component: PartnerComponent },
+  { path: 'partner-sign-up', component: PartnerSignUpComponent },
+  { path: 'login-selection', component: LoginPromptComponent }
 ];
 @NgModule({
   imports: [

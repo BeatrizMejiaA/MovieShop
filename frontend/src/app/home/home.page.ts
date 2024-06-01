@@ -17,10 +17,13 @@ export class Tab1Page {
     this.autocomplete = { input: '' };
   }
   goToLogin() {
-    this.router.navigate(['/login']);
+    this.router.navigate(['/login-selection']);
   }
   goToSignUp() {
     this.router.navigate(['/signup']);
+  }
+  goToPartner() {
+    this.router.navigate(['/partner']);
   }
 
   searchMovie() {

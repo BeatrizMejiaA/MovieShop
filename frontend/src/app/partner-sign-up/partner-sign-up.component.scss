@@ -1,0 +1,23 @@
+
+ion-header {
+  --background: var(--ion-color-primary);
+  ion-toolbar {
+    --background: var(--ion-color-primary);
+    --color: #ffffff;
+  }
+}
+
+ion-content {
+  --background: #E2BEA9;
+  padding: 0px;
+}
+
+
+
+
+
+.error-message {
+  color: red;
+  text-align: center;
+  margin-top: 10px;
+}

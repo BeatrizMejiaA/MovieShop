@@ -1,7 +1,7 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
+<ion-header  [translucent]="true">
+  <ion-toolbar class="navBar">
     <ion-buttons slot="start">
-      <img width="20%" src="../../assets/images/logo.jpg"
+      <img class="logo" width="20%" src="../../assets/images/logo.jpg"
         alt="The Wisconsin State Capitol building in Madison, WI at night" />
     </ion-buttons>
 
@@ -14,7 +14,7 @@
     </ion-buttons>
 
     <ion-buttons slot="end">
-      <ion-button>Store</ion-button>
+      <ion-button (click)="goToPartner()">Become a parter</ion-button>
     </ion-buttons>
 
     <ion-buttons slot="end">

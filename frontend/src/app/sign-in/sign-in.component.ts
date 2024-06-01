@@ -32,10 +32,10 @@ export class SignInComponent  implements OnInit {
 
 
   signIn() {
-    // Placeholder logic for sign-in, replace with actual sign-in logic
+
     console.log('Sign-in data:', this.signInData);
 
-    // Make API request
+    // API request
     this.http.post<any>('https://q0d4hzkoei.execute-api.eu-central-1.amazonaws.com/movieshop-nl-dev/users', this.signInData).subscribe(
       (response) => {
         console.log('API Response:', response);

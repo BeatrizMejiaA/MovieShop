@@ -1,0 +1,110 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="goHome()">
+        <ion-icon slot="icon-only" name="home"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Partner Sign Up</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="container">
+    <ion-card class="form-card">
+      <ion-card-header>
+        <ion-card-title>Partner Sign Up</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <form [formGroup]="partnerForm" (ngSubmit)="onSubmit()">
+          <ion-grid>
+            <ion-row>
+              <ion-col size="12" size-md="6">
+                <ion-item>
+                  <ion-label position="floating"> Email</ion-label>
+                  <ion-input type="email" formControlName="id"></ion-input>
+                </ion-item>
+              </ion-col>
+              <ion-col size="12" size-md="6">
+                <ion-item>
+                  <ion-label position="floating">First Name</ion-label>
+                  <ion-input type="text" formControlName="name"></ion-input>
+                </ion-item>
+              </ion-col>
+              <ion-col size="12" size-md="6">
+                <ion-item>
+                  <ion-label position="floating">Middle Name</ion-label>
+                  <ion-input type="text" formControlName="middleName"></ion-input>
+                </ion-item>
+              </ion-col>
+              <ion-col size="12" size-md="6">
+                <ion-item>
+                  <ion-label position="floating">Last Name</ion-label>
+                  <ion-input type="text" formControlName="lastName"></ion-input>
+                </ion-item>
+              </ion-col>
+              <ion-col size="12" size-md="6">
+                <ion-item>
+                  <ion-label position="floating">Mobile</ion-label>
+                  <ion-input type="tel" formControlName="mobile"></ion-input>
+                </ion-item>
+              </ion-col>
+              <ion-col size="12" size-md="6">
+                <ion-item>
+                  <ion-label position="floating">Email (PayPal)</ion-label>
+                  <ion-input type="email" formControlName="emailPaypal"></ion-input>
+                </ion-item>
+              </ion-col>
+              <ion-col size="12" size-md="4">
+                <ion-item>
+                  <ion-label position="floating">City</ion-label>
+                  <ion-input type="text" formControlName="city"></ion-input>
+                </ion-item>
+              </ion-col>
+              <ion-col size="12" size-md="4">
+                <ion-item>
+                  <ion-label position="floating">State</ion-label>
+                  <ion-input type="text" formControlName="state"></ion-input>
+                </ion-item>
+              </ion-col>
+              <ion-col size="12" size-md="4">
+                <ion-item>
+                  <ion-label position="floating">Zip Code</ion-label>
+                  <ion-input type="text" formControlName="zipCode"></ion-input>
+                </ion-item>
+              </ion-col>
+              <ion-col size="12">
+                <ion-item>
+                  <ion-label position="floating">Address</ion-label>
+                  <ion-input type="text" formControlName="address1"></ion-input>
+                </ion-item>
+              </ion-col>
+              <ion-col size="12">
+                <ion-item>
+                  <ion-label position="floating">Birth Date</ion-label>
+                  <ion-datetime formControlName="birthDate" display-format="MM/DD/YYYY"></ion-datetime>
+                </ion-item>
+              </ion-col>
+              <ion-col size="12" size-md="6">
+                <ion-item>
+                  <ion-label position="floating">Password</ion-label>
+                  <ion-input type="password" formControlName="password"></ion-input>
+                </ion-item>
+              </ion-col>
+              <ion-col size="12" size-md="6">
+                <ion-item>
+                  <ion-label position="floating">Repeat Password</ion-label>
+                  <ion-input type="password" formControlName="repeatpass"></ion-input>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+          <ion-button expand="full" type="submit">Sign Up</ion-button>
+        </form>
+        <div *ngIf="errorMessage" class="error-message">
+          {{ errorMessage }}
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>
