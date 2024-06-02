@@ -1,8 +1,8 @@
-<ion-header  [translucent]="true">
+<ion-header [translucent]="true">
   <ion-toolbar class="navBar">
     <ion-buttons slot="start">
-      <img class="logo" width="20%" src="../../assets/images/logo.jpg"
-        alt="The Wisconsin State Capitol building in Madison, WI at night" />
+      <img class="logo" width="100%" src="../../assets/images/logo.jpg"
+           alt="The Wisconsin State Capitol building in Madison, WI at night"/>
     </ion-buttons>
 
     <ion-buttons slot="end">
@@ -24,12 +24,12 @@
 
       </ion-button>
     </ion-buttons>
-      <ion-buttons slot="end">
-        <ion-button fill="solid" (click)="goToSignUp()">
-          <ion-icon slot="start" name="person-circle"></ion-icon>
-          Sign Up
+    <ion-buttons slot="end">
+      <ion-button fill="solid" (click)="goToSignUp()">
+        <ion-icon slot="start" name="person-circle"></ion-icon>
+        Sign Up
 
-        </ion-button>
+      </ion-button>
 
     </ion-buttons>
 
@@ -43,7 +43,8 @@
       <ion-col size="2"></ion-col>
       <ion-col size="8">
         <ion-searchbar [(ngModel)]="autocomplete.input" (ionChange)="searchMovie()"
-          placeholder="Type your movie or serie name"></ion-searchbar></ion-col>
+                       placeholder="Type your movie or serie name"></ion-searchbar>
+      </ion-col>
       <ion-col size="2"></ion-col>
     </ion-row>
     <ion-row *ngFor="let row of rows">
