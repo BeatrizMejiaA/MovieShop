@@ -20,6 +20,6 @@ export class LoginPromptComponent implements OnInit {
 
   loginAsPartner() {
     // Navigate to the partner login page
-    this.router.navigate(['partner-sign-up']);
+    this.router.navigate(['login-partner']);
   }
 }

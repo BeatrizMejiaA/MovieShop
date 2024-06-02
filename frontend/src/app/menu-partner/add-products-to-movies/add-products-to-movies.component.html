@@ -1,0 +1,41 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Add Products to Movies</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content [fullscreen]="true">
+  <ion-grid>
+    <ion-row>
+      <ion-col size="2"></ion-col>
+      <ion-col size="8">
+        <ion-searchbar [(ngModel)]="autocomplete.input" (ionChange)="searchMovie()"
+          placeholder="Type your movie or serie name"></ion-searchbar></ion-col>
+      <ion-col size="2"></ion-col>
+    </ion-row>
+    <ion-row *ngFor="let row of rows">
+      <ion-col size="2"></ion-col>
+      <ion-col size="3" size-md="4" size-lg="2" *ngFor="let movie of row">
+        <ion-card>
+          <img [src]="movie.photo" alt="{{ movie.name }} Poster">
+          <ion-card-header>
+            <ion-card-title>{{ movie.name }}</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            ID: {{ movie.id }}<br>
+            API ID: {{ movie.apiId }}
+            <ion-button expand="full" (click)="navigateToProducts(movie.id,movie.name,movie.photo,movie.apiId,movie.id)">
+              Add Product
+            </ion-button>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      <ion-col size="2"></ion-col>
+    </ion-row>
+
+  </ion-grid>
+
+
+</ion-content>
+

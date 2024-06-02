@@ -15,10 +15,40 @@ import { MovieProductsComponent } from './movie-products/movie-products.componen
 import { PartnerComponent } from './partner/partner.component';
 import { PartnerSignUpComponent } from './partner-sign-up/partner-sign-up.component';
 import { LoginPromptComponent } from './login-prompt/login-prompt.component';
+import { LoginPartnerComponent } from './login-partner/login-partner.component';
+import { MenuPartnerComponent } from './menu-partner/menu-partner.component';
+import { AddProductsComponent } from './menu-partner/add-products/add-products.component';
+import { AddProductsToMoviesComponent } from './menu-partner/add-products-to-movies/add-products-to-movies.component';
+import { SeeOrdersComponent } from './menu-partner/see-orders/see-orders.component';
+import { AssignProductsToMoviesComponent } from './menu-partner/assign-products-to-movies/assign-products-to-movies.component';
+import { MoviesAndProductsComponent } from './menu-partner/movies-and-products/movies-and-products.component';
+
 
 @NgModule({
-  declarations: [AppComponent,MovieProductsComponent,LoginComponent,SignInComponent,PartnerComponent, PartnerSignUpComponent,LoginPromptComponent],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule,FormsModule, ReactiveFormsModule],
+  declarations: [
+    AppComponent,
+    MovieProductsComponent,
+    LoginComponent,
+    SignInComponent,
+    PartnerComponent,
+    PartnerSignUpComponent,
+    LoginPromptComponent,
+    LoginPartnerComponent,
+    MenuPartnerComponent,
+    AddProductsComponent,
+    AddProductsToMoviesComponent,
+    SeeOrdersComponent,
+    AssignProductsToMoviesComponent,
+    MoviesAndProductsComponent
+  ],
+  imports: [
+    BrowserModule,
+    IonicModule.forRoot(),
+    AppRoutingModule,
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
+  ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],
 })
