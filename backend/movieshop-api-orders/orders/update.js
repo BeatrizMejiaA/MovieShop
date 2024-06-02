@@ -14,7 +14,7 @@ const ORDER_PREFIX = 'ORD-';
 
 const exclusions = []
 
-const required_fields = ["id","status","merchant","user","product","total","createdAt"]
+const required_fields = ["status"]
 
 const required_types = ["ORDERED","PAYED","PRODUCT_SENT","PRODUCT_RECEIVED","PENDENT_USER_AVALIATION","PENDENT_MERCHANT_AVALIATION","PENDENT_PRODUCT_AVALIATION"]
 

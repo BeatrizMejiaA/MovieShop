@@ -9,6 +9,10 @@ provider:
   region: eu-central-1
   environment:
     CB_DYNAMO_DB_ORDERS: ${ssm:${self:custom.stage}-movieshop-orders}
+    CB_DYNAMO_DB_USERS: ${ssm:${self:custom.stage}-movieshop-users}
+    CB_DYNAMO_DB_MERCHANTS: ${ssm:${self:custom.stage}-movieshop-merchants}
+    CB_DYNAMO_DB_PRODUCTS: ${ssm:${self:custom.stage}-movieshop-products}
+    
     CB_STAGE: ${opt:stage, self:provider.stage}
     CB_SERVICE: ${self:service}
     CB_JWT_SECRET: ${ssm:${self:custom.stage}-jwt-secret}
