@@ -5,7 +5,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastController } from '@ionic/angular';
 import { Router } from '@angular/router';
 
-
 interface Product {
   id: string;
   createdAt: string;
@@ -21,7 +20,7 @@ interface Product {
   templateUrl: './assign-products-to-movies.component.html',
   styleUrls: ['./assign-products-to-movies.component.scss'],
 })
-export class AssignProductsToMoviesComponent  implements OnInit {
+export class AssignProductsToMoviesComponent implements OnInit {
   productForm: FormGroup;
   products: Product[] = [];
   submitted: boolean = false;
@@ -32,11 +31,17 @@ export class AssignProductsToMoviesComponent  implements OnInit {
   name: string = '';
   photo: string = '';
   apiId: string = '';
-  id:string = '';
+  id: string = '';
   selectedProducts: Product[] = [];
   successMessage: string = '';
   movieData: any = null;
-  constructor(private fb: FormBuilder,private route: ActivatedRoute, private http: HttpClient, private toastController: ToastController, private router: Router) {
+  constructor(
+    private fb: FormBuilder,
+    private route: ActivatedRoute,
+    private http: HttpClient,
+    private toastController: ToastController,
+    private router: Router
+  ) {
     this.movieId = '';
     this.productForm = this.fb.group({
       name: ['', Validators.required],
@@ -48,18 +53,16 @@ export class AssignProductsToMoviesComponent  implements OnInit {
       price: ['', Validators.required],
       shippingPrice: ['', Validators.required],
     });
-
   }
 
   async ngOnInit() {
-    this.token = await localStorage.getItem('token') as string;
-    this.id = await localStorage.getItem('id') as string;
-     this.email = await localStorage.getItem('email') as string;
-     this.name = await localStorage.getItem('name') as string;
-     this.photo = await localStorage.getItem('photo') as string;
-     this.apiId = await localStorage.getItem('apiId') as string;
-     this.fetchProducts();
-
+    this.token = (await localStorage.getItem('token')) as string;
+    this.id = (await localStorage.getItem('id')) as string;
+    this.email = (await localStorage.getItem('email')) as string;
+    this.name = (await localStorage.getItem('name')) as string;
+    this.photo = (await localStorage.getItem('photo')) as string;
+    this.apiId = (await localStorage.getItem('apiId')) as string;
+    this.fetchProducts();
   }
   fetchProducts() {
     this.http
@@ -78,7 +81,7 @@ export class AssignProductsToMoviesComponent  implements OnInit {
   }
   fetchMovieData(movieId: string) {
     // Replace with your actual API endpoint
-   // movieId = 'MVP-CLIMADOAMOR124'
+    // movieId = 'MVP-CLIMADOAMOR124'
     const apiUrl = `https://p8lh5fvcdi.execute-api.eu-central-1.amazonaws.com/movieshop-nl-dev/visualproductions/${movieId}`;
     this.http.get(apiUrl).subscribe(
       (response: any) => {
@@ -100,34 +103,37 @@ export class AssignProductsToMoviesComponent  implements OnInit {
       photo: this.photo,
       apiId: this.apiId,
       source: 'Movie Datab Base',
-      products: this.selectedProducts
+      products: this.selectedProducts,
     };
 
     const url = `https://37lra03jxc.execute-api.eu-central-1.amazonaws.com/movieshop-nl-dev/merchants/${this.email}/merchantvisualproduction`;
 
     //const url =`https://37lra03jxc.execute-api.eu-central-1.amazonaws.com/movieshop-nl-dev/merchants/${this.email}/merchantvisualproduction/${this.id}`
-    this.http.post(url, payload, {
-      headers: {
-        Authorization: `Bearer ${this.token}`
-      }
-    }).subscribe(
-      async (response) => {
-        console.log('Product assigned to movie successfully:', response);
-        await this.presentToast('Product assigned to movie successfully');
-        this.router.navigate([`menu-partner/movies-and-products`]);
-
-      },
-     async (error) => {
-        console.error('Error assigning product to movie:', error);
-        await this.presentToast('This product was already assigned to this movie');
-      }
-    );
+    this.http
+      .post(url, payload, {
+        headers: {
+          Authorization: `Bearer ${this.token}`,
+        },
+      })
+      .subscribe(
+        async (response) => {
+          console.log('Product assigned to movie successfully:', response);
+          await this.presentToast('Product assigned to movie successfully');
+          this.router.navigate([`menu-partner/movies-and-products`]);
+        },
+        async (error) => {
+          console.error('Error assigning product to movie:', error);
+          await this.presentToast(
+            'This product was already assigned to this movie'
+          );
+        }
+      );
   }
   async presentToast(message: string) {
     const toast = await this.toastController.create({
       message: message,
       duration: 2000,
-      position: 'top'
+      position: 'top',
     });
     toast.present();
   }
@@ -139,5 +145,4 @@ export class AssignProductsToMoviesComponent  implements OnInit {
       this.selectedProducts.push(product);
     }
   }
-
 }

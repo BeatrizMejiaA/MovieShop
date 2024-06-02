@@ -1,0 +1,24 @@
+/* see-orders.component.scss */
+ion-card {
+  margin-bottom: 20px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+thead th {
+  background-color: #f4f4f4;
+  text-align: left;
+  padding: 10px;
+}
+
+tbody td {
+  padding: 10px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+ion-button {
+  margin-left: 10px;
+}

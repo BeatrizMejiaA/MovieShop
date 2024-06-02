@@ -1,9 +1,46 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>See Orders</ion-title>
-  </ion-toolbar>
-</ion-header>
-
+<!-- see-orders.component.html -->
 <ion-content>
-  <p>See orders content goes here.</p>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="12">
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title>Orders</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <table>
+              <thead>
+                <tr>
+                  <th>Order ID</th>
+                  <th>Product</th>
+                  <th>Price</th>
+                  <th>Merchant</th>
+                  <th>Merchant Email</th>
+                  <th>Merchant Mobile</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <ng-container *ngFor="let merchant of merchants">
+                  <tr *ngFor="let order of merchant.orders">
+                    <td>{{ order.id }}</td>
+                    <td>{{ order.product.name }}</td>
+                    <td>{{ order.product.price }}</td>
+                    <td>{{ order.merchant.name }}</td>
+                    <td>{{ order.merchant.emailPaypal }}</td>
+                    <td>{{ order.merchant.mobile }}</td>
+                    <td>{{ order.status }}</td>
+                    <td>
+                      <ion-button *ngIf="order.status === 'PAYED'" (click)="updateStatus(order.id, 'SENT')" color="success">Send Product</ion-button>
+                    </td>
+                  </tr>
+                </ng-container>
+              </tbody>
+            </table>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>
