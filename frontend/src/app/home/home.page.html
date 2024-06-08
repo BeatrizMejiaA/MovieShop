@@ -1,42 +1,5 @@
-<ion-header  [translucent]="true">
-  <ion-toolbar class="navBar">
-    <ion-buttons slot="start">
-      <img class="logo" width="20%" src="../../assets/images/logo.jpg"
-        alt="The Wisconsin State Capitol building in Madison, WI at night" />
-    </ion-buttons>
 
-    <ion-buttons slot="end">
-      <ion-button>About</ion-button>
-    </ion-buttons>
-
-    <ion-buttons slot="end">
-      <ion-button>Movies</ion-button>
-    </ion-buttons>
-
-    <ion-buttons slot="end">
-      <ion-button (click)="goToPartner()">Become a parter</ion-button>
-    </ion-buttons>
-
-    <ion-buttons slot="end">
-      <ion-button fill="solid" (click)="goToLogin()">
-        <ion-icon slot="start" name="person-circle"></ion-icon>
-        Login
-
-      </ion-button>
-    </ion-buttons>
-      <ion-buttons slot="end">
-        <ion-button fill="solid" (click)="goToSignUp()">
-          <ion-icon slot="start" name="person-circle"></ion-icon>
-          Sign Up
-
-        </ion-button>
-
-    </ion-buttons>
-
-  </ion-toolbar>
-
-</ion-header>
-
+<app-menu></app-menu>
 <ion-content [fullscreen]="true">
   <ion-grid>
     <ion-row>

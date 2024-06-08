@@ -32,7 +32,7 @@
                     <td>{{ order.merchant.mobile }}</td>
                     <td>{{ order.status }}</td>
                     <td>
-                      <ion-button *ngIf="order.status === 'PAYED'" (click)="updateStatus(order.id, 'SENT')" color="success">Send Product</ion-button>
+                      <ion-button *ngIf="order.status === 'PAYED'" (click)="updateStatus(order.id, 'PRODUCT_SENT')" color="success">Send Product</ion-button>
                     </td>
                   </tr>
                 </ng-container>

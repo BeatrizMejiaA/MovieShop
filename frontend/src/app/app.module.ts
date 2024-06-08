@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA  } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
@@ -22,6 +22,8 @@ import { AddProductsToMoviesComponent } from './menu-partner/add-products-to-mov
 import { SeeOrdersComponent } from './menu-partner/see-orders/see-orders.component';
 import { AssignProductsToMoviesComponent } from './menu-partner/assign-products-to-movies/assign-products-to-movies.component';
 import { MoviesAndProductsComponent } from './menu-partner/movies-and-products/movies-and-products.component';
+import { UserMenuComponent } from './user-menu/user-menu.component';
+import { AuthService } from './auth.service';
 
 
 @NgModule({
@@ -30,7 +32,6 @@ import { MoviesAndProductsComponent } from './menu-partner/movies-and-products/m
     MovieProductsComponent,
     LoginComponent,
     SignInComponent,
-    PartnerComponent,
     PartnerSignUpComponent,
     LoginPromptComponent,
     LoginPartnerComponent,
@@ -39,7 +40,9 @@ import { MoviesAndProductsComponent } from './menu-partner/movies-and-products/m
     AddProductsToMoviesComponent,
     SeeOrdersComponent,
     AssignProductsToMoviesComponent,
-    MoviesAndProductsComponent
+    MoviesAndProductsComponent,
+    UserMenuComponent
+
   ],
   imports: [
     BrowserModule,
@@ -47,9 +50,10 @@ import { MoviesAndProductsComponent } from './menu-partner/movies-and-products/m
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule,
+    ReactiveFormsModule
   ],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
+  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy },AuthService],
   bootstrap: [AppComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule {}

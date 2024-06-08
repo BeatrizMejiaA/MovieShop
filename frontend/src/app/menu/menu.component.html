@@ -1,0 +1,49 @@
+<ion-header [translucent]="true">
+  <ion-toolbar class="navBar">
+    <ion-buttons slot="start">
+      <img class="logo" width="20%" src="../../assets/images/logo.jpg" alt="The best movieshop in the market" />
+    </ion-buttons>
+
+    <ion-buttons slot="end">
+      <ion-button (click)="goToMovies()">Movies</ion-button>
+    </ion-buttons>
+
+    <ion-buttons slot="end" *ngIf="isLoggedIn">
+      <ion-button (click)="navigateToPurchasedItems()">
+        Purchased Items
+      </ion-button>
+      <ion-button (click)="navigateToUserOrders()">
+        User Orders
+      </ion-button>
+    </ion-buttons>
+
+    <ion-buttons slot="end">
+      <ion-button (click)="goToPartner()">Become a partner</ion-button>
+    </ion-buttons>
+
+    <ion-buttons slot="end">
+      <ion-button (click)="goToAbout()">About</ion-button>
+    </ion-buttons>
+
+    <ion-buttons slot="end" *ngIf="!isLoggedIn">
+      <ion-button fill="solid" (click)="goToLogin()">
+        <ion-icon slot="start" name="person-circle"></ion-icon>
+        Login
+      </ion-button>
+    </ion-buttons>
+
+    <ion-buttons slot="end" *ngIf="!isLoggedIn">
+      <ion-button fill="solid" (click)="goToSignUp()">
+        <ion-icon slot="start" name="person-circle"></ion-icon>
+        Sign Up
+      </ion-button>
+    </ion-buttons>
+
+    <ion-buttons slot="end" *ngIf="isLoggedIn">
+      <ion-button fill="solid" (click)="logout()">
+        <ion-icon slot="start" name="log-out"></ion-icon>
+        Logout
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>

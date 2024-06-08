@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Products</ion-title>
+    <ion-title>Movie Products</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -20,7 +20,7 @@
       <ion-col size="12" *ngFor="let merchant of movieData.merchants">
         <ion-card>
           <ion-card-header>
-            <ion-card-title>Merchant: {{ merchant.id }}</ion-card-title>
+            <ion-card-title>Sold by: {{ merchant.id }}</ion-card-title>
           </ion-card-header>
         </ion-card>
       </ion-col>
@@ -35,6 +35,10 @@
               <p>ID: {{ product.id }}</p>
               <p>Price: {{ product.price }}</p>
               <p>Shipping Price: {{ product.shippingPrice }}</p>
+              <ion-button fill="solid" (click)="buyProduct(product.id, product.name, product.price, merchant.id)">
+                {{ isLoggedIn ? 'Buy' : 'Login to buy' }}
+                <ion-icon slot="end"></ion-icon>
+              </ion-button>
             </ion-card-content>
           </ion-card>
         </ion-col>
@@ -42,6 +46,7 @@
     </ion-row>
   </ion-grid>
 </ion-content>
+
 <ion-content *ngIf="!movieData">
-  <p>Loading data...</p>
+  <p>Loading...</p>
 </ion-content>

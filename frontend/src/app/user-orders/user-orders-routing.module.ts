@@ -1,12 +1,13 @@
+import { UserOrdersComponent } from './user-orders.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { HomePage } from './home.page';
+
 import { MovieProductsComponent } from '../movie-products/movie-products.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: HomePage,
+    component: UserOrdersComponent,
     children: [],
   },
 ];
@@ -15,4 +16,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class HomePageRoutingModule {}
+export class UserOrdersRoutingModule {}

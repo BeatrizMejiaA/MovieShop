@@ -1,0 +1,46 @@
+.logo{
+  width: 100px; /* Adjust as needed */
+  height: 100px; /* Adjust as needed */
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 1.5rem;
+}
+
+ion-header ion-toolbar.navBar {
+  background-color: var(--nav-bar-background-color) !important;
+}
+
+.orders-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.order-card {
+  border: 1px solid #ccc;
+  padding: 20px;
+  width: 300px;
+  border-radius: 10px;
+}
+
+.product-details, .merchant-details {
+  margin-top: 10px;
+}
+
+img {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  margin-top: 10px;
+}
+
+.no-orders {
+  padding: 20px;
+  text-align: center;
+}
+
+ion-thumbnail img {
+  max-width: 100px;
+  max-height: 100px;
+}
+

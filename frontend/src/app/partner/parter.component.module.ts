@@ -1,13 +1,13 @@
+
 import { IonicModule } from '@ionic/angular';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import {  HomePage } from './home.page';
+import { PartnerComponent } from './partner.component';
 import { ExploreContainerComponentModule } from '../explore-container/explore-container.module';
-
-import { HomePageRoutingModule } from './home-routing.module';
 import { MenuComponent } from '../menu/menu.component';
 import { MenuModule } from '../menu/menu.module';
+import { PartnerComponentRoutingModule} from './parter-routing.module'
 
 @NgModule({
   imports: [
@@ -15,12 +15,12 @@ import { MenuModule } from '../menu/menu.module';
     CommonModule,
     FormsModule,
     ExploreContainerComponentModule,
-    HomePageRoutingModule,
     MenuModule,
+    PartnerComponentRoutingModule
   ],
-  declarations: [HomePage],
+  declarations: [PartnerComponent],
   exports: [MenuComponent],
 })
 
 
-export class HomePageModule {}
+export class PartnerModule {}

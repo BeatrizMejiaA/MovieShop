@@ -13,25 +13,40 @@ import { AddProductsToMoviesComponent } from './menu-partner/add-products-to-mov
 import { SeeOrdersComponent } from './menu-partner/see-orders/see-orders.component';
 import { AssignProductsToMoviesComponent } from './menu-partner/assign-products-to-movies/assign-products-to-movies.component';
 import { MoviesAndProductsComponent } from './menu-partner/movies-and-products/movies-and-products.component';
+import { UserMenuComponent } from './user-menu/user-menu.component';
+import { UserOrdersComponent } from './user-orders/user-orders.component';
+
 
 const routes: Routes = [
   {
     path: '',
     loadChildren: () =>
-      import('./home/home.module').then((m) => m.Tab1PageModule),
+      import('./home/home.module').then((m) => m.HomePageModule),
   },
   {
     path: 'movies',
     loadChildren: () =>
-      import('./home/home.module').then((m) => m.Tab1PageModule),
+      import('./home/home.module').then((m) => m.HomePageModule),
   },
+  {
+    path: 'user-orders',
+    loadChildren: () =>
+      import('./user-orders/user-orders.module').then((m) => m.UserOrdersModule),
+  },
+  {
+    path: 'partner',
+    loadChildren: () =>
+      import('./partner/parter.component.module').then((m) => m.PartnerModule),
+  },
+
   { path: 'movies/:id/products', component: MovieProductsComponent },
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignInComponent },
-  { path: 'partner', component: PartnerComponent },
+
   { path: 'partner-sign-up', component: PartnerSignUpComponent },
   { path: 'login-selection', component: LoginPromptComponent },
   { path: 'login-partner', component: LoginPartnerComponent },
+
   {
     path: 'menu-partner',
     component: MenuPartnerComponent,
@@ -43,6 +58,7 @@ const routes: Routes = [
       { path: 'moviesproducts/:id/products', component: AssignProductsToMoviesComponent },
       ],
   },
+  { path: 'user-menu', component: UserMenuComponent},
   { path: '**', redirectTo: '' }
 ];
 @NgModule({

@@ -1,30 +1,28 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
 })
-export class Tab1Page {
+
+export class HomePage implements OnInit {
   autocomplete: { input: string };
   movies: any[] = [];
   rows: any[] = [];
 
-  constructor(private http: HttpClient, private router: Router) {
-    // Initialize autocomplete if needed
+
+
+  constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute) {
     this.autocomplete = { input: '' };
   }
-  goToLogin() {
-    this.router.navigate(['/login-selection']);
-  }
-  goToSignUp() {
-    this.router.navigate(['/signup']);
-  }
-  goToPartner() {
-    this.router.navigate(['/partner']);
-  }
+
+  ngOnInit() {
+
+}
 
   searchMovie() {
     const apiUrl =
@@ -33,18 +31,19 @@ export class Tab1Page {
 
     this.http.get(apiUrl).subscribe(
       (response: any) => {
-        // Handle the response data
         this.movies = response;
         this.rows = this.chunkArray(this.movies, 4);
       },
       (error) => {
-        // Handle errors
         console.error('Error fetching data:', error);
       }
     );
   }
 
-  // Function to chunk array into smaller arrays (rows)
+  navigateToUserOrders() {
+    this.router.navigate(['/user-orders']);
+  }
+
   chunkArray(array: any[], size: number): any[] {
     const result = [];
     for (let i = 0; i < array.length; i += size) {
@@ -52,6 +51,7 @@ export class Tab1Page {
     }
     return result;
   }
+
   navigateToProducts(movieId: string) {
     this.router.navigate([`/movies/${movieId}/products`]);
   }
