@@ -23,9 +23,19 @@ ion-header ion-toolbar.navBar {
   --background: #f1f3f2;
 }
 
+.nav-buttons {
+  display: flex;
+  flex-wrap: nowrap;
+}
+
 @media (max-width: 600px) {
   .navBar {
     padding: 10px; /* Add padding for better touch targets */
+  }
+
+  .nav-buttons {
+    flex-wrap: wrap;
+    justify-content: center; /* Center buttons for better alignment on mobile */
   }
 
   ion-buttons {
@@ -48,5 +58,3 @@ ion-header {
 ion-toolbar {
   --background: #f1f3f2;
 }
-
-
