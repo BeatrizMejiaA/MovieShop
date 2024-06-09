@@ -36,19 +36,14 @@
         <ion-button *ngIf="order.status === 'ORDERED'" (click)="payOrder(order.id)">
           Pay
         </ion-button>
+        <ion-button *ngIf="order.status === 'PRODUCT_SENT'" (click)="orderReceived(order.id)">
+          Confirm order received
+        </ion-button>
 
         <div *ngIf="order.showCardInput" class="card-input">
           <ion-item>
-            <ion-label position="floating">Card Number</ion-label>
-            <ion-input type="text" [(ngModel)]="order.cardNumber"></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-label position="floating">Expiration Date</ion-label>
-            <ion-input type="text" placeholder="MM/YY" [(ngModel)]="order.expirationDate"></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-label position="floating">Cardholder Name</ion-label>
-            <ion-input type="text" [(ngModel)]="order.cardName"></ion-input>
+            <ion-label position="floating">Paypal email</ion-label>
+            <ion-input type="email" [(ngModel)]="order.paypalemail"></ion-input>
           </ion-item>
           <ion-button (click)="submitPayment(order.id)">Submit Payment</ion-button>
         </div>

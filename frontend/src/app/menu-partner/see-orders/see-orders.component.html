@@ -11,9 +11,11 @@
             <table>
               <thead>
                 <tr>
+                  <th>Customer Name</th>
                   <th>Order ID</th>
                   <th>Product</th>
                   <th>Price</th>
+                  <th>Customer Email-Paypal</th>
                   <th>Merchant</th>
                   <th>Merchant Email</th>
                   <th>Merchant Mobile</th>
@@ -24,15 +26,17 @@
               <tbody>
                 <ng-container *ngFor="let merchant of merchants">
                   <tr *ngFor="let order of merchant.orders">
+                    <td>{{ order.user.name }}</td>
                     <td>{{ order.id }}</td>
                     <td>{{ order.product.name }}</td>
                     <td>{{ order.product.price }}</td>
+                    <td>{{ order.user.id }}</td>
                     <td>{{ order.merchant.name }}</td>
                     <td>{{ order.merchant.emailPaypal }}</td>
                     <td>{{ order.merchant.mobile }}</td>
                     <td>{{ order.status }}</td>
                     <td>
-                      <ion-button *ngIf="order.status === 'PAYED'" (click)="updateStatus(order.id, 'PRODUCT_SENT')" color="success">Send Product</ion-button>
+                      <ion-button *ngIf="order.status === 'PAYED'" (click)="updateStatus(order.id, order.user.id,'PRODUCT_SENT')" color="success">Send Product</ion-button>
                     </td>
                   </tr>
                 </ng-container>

@@ -55,21 +55,19 @@ interface Order {
   user: User;
   status: string;
   showCardInput?: boolean;
-  cardNumber?: string;
-  expirationDate?: string;
-  cardName?: string;
+  paypalemail?: string;
 }
 
 @Component({
   selector: 'app-user-orders',
   templateUrl: './user-orders.component.html',
-  styleUrls: ['./user-orders.component.scss']
+  styleUrls: ['./user-orders.component.scss'],
 })
 export class UserOrdersComponent implements OnInit {
   orders: Order[] = [];
   useremail: string = '';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   async ngOnInit() {
     this.useremail = (await localStorage.getItem('useremail')) as string;
@@ -79,12 +77,17 @@ export class UserOrdersComponent implements OnInit {
       },
       error: (error) => {
         console.error('Error fetching orders:', error);
-      }
+      },
     });
   }
 
   getOrders(): Observable<Order[]> {
-    return this.http.get<Order[]>('https://ew99t2gt72.execute-api.eu-central-1.amazonaws.com/movieshop-nl-dev/users/' + this.useremail + '/orders')
+    return this.http
+      .get<Order[]>(
+        'https://ew99t2gt72.execute-api.eu-central-1.amazonaws.com/movieshop-nl-dev/users/' +
+          this.useremail +
+          '/orders'
+      )
       .pipe(
         catchError((error) => {
           console.error('Error fetching orders:', error);
@@ -94,24 +97,42 @@ export class UserOrdersComponent implements OnInit {
   }
 
   payOrder(orderId: string) {
-    const order = this.orders.find(o => o.id === orderId);
+    const order = this.orders.find((o) => o.id === orderId);
     if (order) {
       order.showCardInput = true;
     }
   }
 
-  async submitPayment(orderId: string) {
-    const order = this.orders.find(o => o.id === orderId);
-    if (order && order.cardNumber && order.expirationDate && order.cardName) {
+  orderReceived(orderId: string) {
+    const order = this.orders.find((o) => o.id === orderId);
+    if (order) {
       const apiUrl = `https://ew99t2gt72.execute-api.eu-central-1.amazonaws.com/movieshop-nl-dev/users/${this.useremail}/orders/${orderId}`;
       const paymentData = {
-        status: 'PAYED'
+        status: 'PRODUCT_RECEIVED',
+      };
+      this.http.put(apiUrl, paymentData).subscribe({
+        next: (response) => {
+          alert('Thank you for your purchase!');
+        },
+        error: (error) => {
+         alert('Please try again');
+        },
+      });
+    }
+  }
+
+  async submitPayment(orderId: string) {
+    const order = this.orders.find((o) => o.id === orderId);
+    if (order && order.paypalemail ) {
+      const apiUrl = `https://ew99t2gt72.execute-api.eu-central-1.amazonaws.com/movieshop-nl-dev/users/${this.useremail}/orders/${orderId}`;
+      const paymentData = {
+        status: 'PAYED',
       };
 
       // Add authentication token
-      const token = await localStorage.getItem('usertoken') as string;
+      const token = (await localStorage.getItem('usertoken')) as string;
       const headers = new HttpHeaders({
-        'Authorization': `Bearer ${token}`
+        Authorization: `Bearer ${token}`,
       });
 
       this.http.put(apiUrl, paymentData, { headers }).subscribe({
@@ -124,7 +145,7 @@ export class UserOrdersComponent implements OnInit {
         error: (error) => {
           console.error('Error processing payment:', error);
           alert('Payment failed. Please try again.');
-        }
+        },
       });
     } else {
       alert('Please fill in all the card details.');

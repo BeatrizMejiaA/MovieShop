@@ -94,44 +94,46 @@ export class SeeOrdersComponent implements OnInit {
       );
   }
 
-  async updateStatus(orderId: string, newStatus: string) {
-    console.log(newStatus)
+  async updateStatus(
+    orderId: string,
+    customerEmail: string,
+    newStatus: string
+  ) {
     const new_status = {
-      status: newStatus
+      status: newStatus,
     };
     const token = (await localStorage.getItem('token')) as string;
-    console.log(token)
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`,
-      'Content-Type': 'application/json'
 
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
     });
 
     this.http
-        .put(
-            `https://ew99t2gt72.execute-api.eu-central-1.amazonaws.com/movieshop-nl-dev/users/${this.email}/orders/${orderId}`,new_status,
-            { headers: headers } // Include the headers here
-        )
-        .subscribe(
-            async () => {
-                this.fetchOrders(); // Reload the orders to reflect the changes
-                const alert = await this.alertController.create({
-                    header: 'Success',
-                    message: 'Order status updated successfully.',
-                    buttons: ['OK'],
-                });
-                await alert.present();
-            },
-            async (error) => {
-                console.error('Error updating order status:', error);
-                const alert = await this.alertController.create({
-                    header: 'Error',
-                    message: 'There was an error updating the order status.',
-                    buttons: ['OK'],
-                });
-                await alert.present();
-            }
-        );
-}
-
+      .put(
+        `https://ew99t2gt72.execute-api.eu-central-1.amazonaws.com/movieshop-nl-dev/users/${customerEmail}/orders/${orderId}`,
+        new_status
+       // { headers: headers } // Include the headers here
+      )
+      .subscribe(
+        async () => {
+          this.fetchOrders(); // Reload the orders to reflect the changes
+          const alert = await this.alertController.create({
+            header: 'Success',
+            message: 'Order status updated successfully.',
+            buttons: ['OK'],
+          });
+          await alert.present();
+        },
+        async (error) => {
+          console.error('Error updating order status:', error);
+          const alert = await this.alertController.create({
+            header: 'Error',
+            message: 'There was an error updating the order status.',
+            buttons: ['OK'],
+          });
+          await alert.present();
+        }
+      );
+  }
 }
