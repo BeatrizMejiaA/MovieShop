@@ -1,10 +1,96 @@
 ion-img
 {
   margin-top: 100px !important;
-  height: 300px !important;
+  height: 200px !important;
   float: left !important;
 }
 ion-card-title{
-  padding-top: 100px !important;
-  
+  padding-top: 10px !important;
+
 }
+
+.container {
+  margin-top: 100px; // Adjust the value as needed
+}
+
+
+.movie-products-container {
+  border: 2px solid gray;
+  border-image: linear-gradient(45deg, #a9a9a9, #d3d3d3, #d3d3d3, #a9a9a9) 1; // Slightly varying colors
+  padding: 2px; // Space between the content and the border
+  border-radius: 10px; // Optional: adds rounded corners to the border
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%; // Ensure the container takes the full height available
+  margin-bottom: 20px; // Add margin to create space between rows
+}
+
+.movie-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 120px;
+  text-align: center;
+}
+
+.movie-image {
+  width: 100%;
+  height: auto;
+  max-height: 150px;
+  object-fit: cover;
+}
+
+.movie-details {
+  margin-top: 10px;
+}
+
+.movie-details h2 {
+  font-size: 18px; // Adjust the font size as needed to reduce the title size
+  margin: 5px 0; // Optional: adjust margins for spacing
+}
+
+.products-container {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  width: 100%; // Ensure it takes the full width of the container
+}
+
+ion-grid {
+  width: 100%; // Ensure the ion-grid fills the container
+
+}
+
+ion-row {
+  width: 100%; // Ensure the ion-row fills the container
+  flex: 1; // Ensure it takes the full available height
+  margin-bottom: 20px; // Add margin to create space between rows
+}
+
+.product-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 10px;
+  margin: 5px; // Space between product items
+}
+
+.product-item h3 {
+  font-size: 14px; // Adjust the font size as needed
+  margin: 5px 0; // Optional: adjust margins for spacing
+}
+
+.product-image {
+  width: 100%;
+  height: auto;
+  max-height: 100px;
+  object-fit: cover;
+}
+
+ion-col {
+  padding: 0;
+}
+
+

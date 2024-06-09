@@ -16,7 +16,16 @@ const required_fields = ["status","merchant","user","product","total"]
 
 const required_types = ["ORDERED","PAYED","PRODUCT_SENT","PRODUCT_RECEIVED","PENDENT_USER_AVALIATION","PENDENT_MERCHANT_AVALIATION","PENDENT_PRODUCT_AVALIATION"]
 
-
+async function getItem(params){
+  console.log("get item params")
+  console.log(params)
+  try {
+    const data = await dynamoDb.get(params).promise()
+    return data
+  } catch (err) {
+    return err
+  }
+}
 
 async function validateOrder(data,path){
   console.log("z")
@@ -111,6 +120,73 @@ async function validateOrder(data,path){
   }
 }
 
+async function getUser(user){
+  const paramsUser = {
+    TableName: process.env.CB_DYNAMO_DB_USERS,
+    Key: {
+      id: user,
+    },
+  };
+
+  console.log("params getuser")
+  console.log(paramsUser)
+
+  try{
+    const result = await getItem(paramsUser)
+    return result.Item;
+  } catch (err) {
+    return err
+  }
+}
+
+async function getMerchant(merchant){
+
+  const paramsMerchant = {
+    TableName: process.env.CB_DYNAMO_DB_MERCHANTS,
+    Key: {
+      id: merchant,
+    },
+  };
+
+  console.log("params getmerchant")
+  console.log(paramsMerchant)
+
+
+  try{
+    const result = await getItem(paramsMerchant)
+
+    return result.Item;
+  } catch (err) {
+    return err
+  }
+}
+
+async function getProduct(merchant,product){
+
+  const paramsProduct = {
+    TableName: process.env.CB_DYNAMO_DB_PRODUCTS,
+    Key: {
+      id: merchant,
+    },
+  };
+
+  console.log("params getproduct")
+  console.log(paramsProduct)
+
+
+
+  try{
+
+    const result = await getItem(paramsProduct)
+
+    var theProduct = result.Item.products.filter(s => s.id === product);    
+
+    return theProduct;
+  } catch (err) {
+    return err
+  }
+}
+
 async function createOrder(data,path){
 
   try{
@@ -124,14 +200,27 @@ async function createOrder(data,path){
       return result2
     }
     
+    console.log("Geting product")
+    const product = await getProduct(data.merchant,data.product)
+    console.log(product)
+
+    console.log("Geting merchant")
+    const merchant = await getMerchant(data.merchant)
+    console.log(merchant)
+
+    console.log("Geting user")
+    const user = await getUser(data.user)
+    console.log(user)
+
+
     const timestamp = new Date().getTime();
     console.log("Ola10");
     let order = {
       id: ORDER_PREFIX + AWS.util.uuid.v4().toUpperCase(),
-      user: data.user,
+      user: user,
       status: data.status,
-      merchant: data.merchant,
-      product: data.product,
+      merchant: merchant,
+      product: product,
       createdAt: timestamp,
       total: data.product.price,
     }
@@ -157,14 +246,6 @@ async function createOrder(data,path){
   }
 }
 
-async function getItem(params){
-  try {
-    const data = await dynamoDb.get(params).promise()
-    return data
-  } catch (err) {
-    return err
-  }
-}
 
 module.exports.create = async (event, context, callback) => {
 

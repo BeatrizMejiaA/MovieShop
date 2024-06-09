@@ -18,7 +18,7 @@ resource "aws_iam_policy" "movieshop_orders_policy" {
         "logs:PutLogEvents"
       ],
       "Effect": "Allow",
-      "Resource": "${aws_dynamodb_table.movieshop-orders.arn}"
+      "Resource": "*"
     },
     {
       "Action": [
