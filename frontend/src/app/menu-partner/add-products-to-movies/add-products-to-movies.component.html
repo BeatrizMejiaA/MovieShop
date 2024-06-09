@@ -4,19 +4,18 @@
   </ion-toolbar>
 </ion-header>
 
-
 <ion-content [fullscreen]="true">
   <ion-grid>
     <ion-row>
-      <ion-col size="2"></ion-col>
-      <ion-col size="8">
-        <ion-searchbar [(ngModel)]="autocomplete.input" (ionChange)="searchMovie()"
-          placeholder="Type your movie or serie name"></ion-searchbar></ion-col>
-      <ion-col size="2"></ion-col>
+      <ion-col size="0" size-sm="2"></ion-col>
+      <ion-col size="12" size-sm="8">
+        <ion-searchbar [(ngModel)]="autocomplete.input" (ionChange)="searchMovie()" placeholder="Type your movie or serie name"></ion-searchbar>
+      </ion-col>
+      <ion-col size="0" size-sm="2"></ion-col>
     </ion-row>
-    <ion-row *ngFor="let row of rows">
-      <ion-col size="2"></ion-col>
-      <ion-col size="3" size-md="4" size-lg="2" *ngFor="let movie of row">
+    <ion-row *ngFor="let movie of movies">
+      <ion-col size="0" size-sm="2"></ion-col>
+      <ion-col size="12" size-sm="8">
         <ion-card>
           <img [src]="movie.photo" alt="{{ movie.name }} Poster">
           <ion-card-header>
@@ -31,11 +30,7 @@
           </ion-card-content>
         </ion-card>
       </ion-col>
-      <ion-col size="2"></ion-col>
+      <ion-col size="0" size-sm="2"></ion-col>
     </ion-row>
-
   </ion-grid>
-
-
 </ion-content>
-

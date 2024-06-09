@@ -1,11 +1,16 @@
-/* see-orders.component.scss */
 ion-card {
   margin-bottom: 20px;
+}
+
+.table-container {
+  width: 100%;
+  overflow-x: auto;
 }
 
 table {
   width: 100%;
   border-collapse: collapse;
+  margin-top: 30px; /* Default margin-top for large screens */
 }
 
 thead th {
@@ -21,4 +26,37 @@ tbody td {
 
 ion-button {
   margin-left: 10px;
+}
+
+@media (max-width: 600px) {
+  table {
+    font-size: 14px;
+    margin-top: 250px; /* Different margin-top for small screens */
+  }
+
+  thead th, tbody td {
+    padding: 8px;
+  }
+
+  thead {
+    display: none;
+  }
+
+  tbody td {
+    display: block;
+    width: 100%;
+    text-align: right;
+    position: relative;
+    padding-left: 50%;
+  }
+
+  tbody td::before {
+    content: attr(data-label);
+    position: absolute;
+    left: 0;
+    width: 50%;
+    padding-left: 10px;
+    font-weight: bold;
+    text-align: left;
+  }
 }

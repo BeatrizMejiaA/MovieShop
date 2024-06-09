@@ -1,5 +1,13 @@
 .container {
   padding: 16px;
+  margin-top: 130px; /* Default margin for small screens */
+}
+
+/* Media query for large screens */
+@media (min-width: 768px) {
+  .container {
+    margin-top: 10px;
+  }
 }
 
 ion-card {

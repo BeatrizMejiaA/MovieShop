@@ -14,8 +14,43 @@
   color: #666;
 }
 
+/* Default margin-top */
 .success-message {
   color: green;
   text-align: center;
   margin-top: 20px;
+}
+
+/* Responsive margin-top for large screens */
+@media (min-width: 768px) {
+  .success-message {
+    margin-top: 30px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .success-message {
+    margin-top: 40px;
+  }
+}
+
+/* Default border for movie card */
+.movie-card {
+  border: 2px solid #ccc;
+  margin-top: 160px;
+}
+
+/* Responsive border for medium screens */
+@media (min-width: 768px) {
+  .movie-card {
+    margin-top: 20px;
+    border: 2px solid #888;
+  }
+}
+
+/* Responsive border for large screens */
+@media (min-width: 1024px) {
+  .movie-card {
+    border: 2px solid #444;
+  }
 }

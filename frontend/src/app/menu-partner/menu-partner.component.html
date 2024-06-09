@@ -1,33 +1,16 @@
 <ion-app>
   <ion-header>
-    <ion-toolbar>
+    <ion-toolbar class="navBar">
       <ion-buttons slot="start">
-        <ion-button (click)="navigateTo('home')">
-          <ion-icon slot="icon-only" name="home"></ion-icon>
-          Home
-        </ion-button>
+        <div class="logo"></div>
       </ion-buttons>
-      <ion-title>
-        MovieShop
-      </ion-title>
 
-
-      <ion-buttons slot="end">
-        <ion-button (click)="navigateTo('add-products')">
-          Add Products
-        </ion-button>
-        <ion-button (click)="navigateTo('add-products-to-movies')">
-          Add Products to Movies
-        </ion-button>
-        <ion-button (click)="navigateTo('movies-and-products')">
-          Movies and products
-        </ion-button>
-        <ion-button (click)="navigateTo('see-orders')">
-          See Orders
-        </ion-button>
-        <ion-button (click)="logOut()" color="danger">
-          Log Out
-        </ion-button>
+      <ion-buttons slot="end" class="nav-buttons">
+        <ion-button (click)="navigateTo('add-products')">Add Products</ion-button>
+        <ion-button (click)="navigateTo('add-products-to-movies')">Add Products to Movies</ion-button>
+        <ion-button (click)="navigateTo('movies-and-products')">Movies and products</ion-button>
+        <ion-button (click)="navigateTo('see-orders')">See Orders</ion-button>
+        <ion-button (click)="logOut()" color="danger">Log Out</ion-button>
       </ion-buttons>
     </ion-toolbar>
   </ion-header>
