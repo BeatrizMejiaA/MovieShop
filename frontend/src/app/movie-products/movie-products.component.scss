@@ -1,7 +1,15 @@
-ion-card {
-  margin: 10px;
+ion-card.main-card,
+ion-card.merchant-card,
+ion-card.product-card {
+  margin: 5px;
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+ion-card.product-card {
+  width: 100%;
+  max-width: 300px; /* Reduce the max-width to scale down the card size */
+  margin: 5px auto; /* Center the card horizontally */
 }
 
 ion-card img {
@@ -12,22 +20,22 @@ ion-card img {
 }
 
 ion-card-title {
-  font-size: 1.2em;
+  font-size: 1em; /* Reduce font size */
   font-weight: bold;
 }
 
 ion-card-content p {
   margin: 0;
-  font-size: 0.9em;
+  font-size: 0.8em; /* Reduce font size */
   color: #555;
 }
 
 ion-grid {
-  padding: 0 10px;
+  padding: 0 5px; /* Reduce padding */
 }
 
 ion-row {
-  margin-bottom: 10px;
+  margin-bottom: 5px; /* Reduce margin */
 }
 
 ion-col {

@@ -1,14 +1,10 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>Movie Products</ion-title>
-  </ion-toolbar>
-</ion-header>
+<app-menu></app-menu>
 
 <ion-content *ngIf="movieData">
   <ion-grid>
     <ion-row *ngIf="movieData.photo && movieData.name">
       <ion-col size="12">
-        <ion-card>
+        <ion-card class="main-card">
           <img [src]="movieData.photo" alt="{{ movieData.name }} Poster">
           <ion-card-header>
             <ion-card-title>{{ movieData.name }}</ion-card-title>
@@ -18,35 +14,37 @@
     </ion-row>
     <ion-row *ngIf="movieData.merchants">
       <ion-col size="12" *ngFor="let merchant of movieData.merchants">
-        <ion-card>
+        <ion-card class="merchant-card">
           <ion-card-header>
             <ion-card-title>Sold by: {{ merchant.id }}</ion-card-title>
           </ion-card-header>
+          <ion-grid>
+            <ion-row>
+              <ion-col size="12" size-md="4" *ngFor="let product of merchant.products">
+                <ion-card class="product-card">
+                  <img *ngIf="product.photos && product.photos[0]" [src]="product.photos[0].url" alt="{{ product.name }} Image">
+                  <ion-card-header>
+                    <ion-card-title>{{ product.name }}</ion-card-title>
+                  </ion-card-header>
+                  <ion-card-content>
+                    <p>ID: {{ product.id }}</p>
+                    <p>Price: {{ product.price }}</p>
+                    <p>Shipping Price: {{ product.shippingPrice }}</p>
+                    <ion-button fill="solid" (click)="buyProduct(product.id, product.name, product.price, merchant.id)">
+                      {{ isLoggedIn ? 'Buy' : 'Login to buy' }}
+                      <ion-icon slot="end"></ion-icon>
+                    </ion-button>
+                  </ion-card-content>
+                </ion-card>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
         </ion-card>
-      </ion-col>
-      <ion-col size="3" *ngFor="let merchant of movieData.merchants">
-        <ion-col size="3" *ngFor="let product of merchant.products">
-          <ion-card>
-            <img *ngIf="product.photos && product.photos[0]" [src]="product.photos[0].url" alt="{{ product.name }} Image">
-            <ion-card-header>
-              <ion-card-title>{{ product.name }}</ion-card-title>
-            </ion-card-header>
-            <ion-card-content>
-              <p>ID: {{ product.id }}</p>
-              <p>Price: {{ product.price }}</p>
-              <p>Shipping Price: {{ product.shippingPrice }}</p>
-              <ion-button fill="solid" (click)="buyProduct(product.id, product.name, product.price, merchant.id)">
-                {{ isLoggedIn ? 'Buy' : 'Login to buy' }}
-                <ion-icon slot="end"></ion-icon>
-              </ion-button>
-            </ion-card-content>
-          </ion-card>
-        </ion-col>
       </ion-col>
     </ion-row>
   </ion-grid>
 </ion-content>
 
 <ion-content *ngIf="!movieData">
-  <p>Loading...</p>
+  <p class="loading-text">Loading...</p>
 </ion-content>
