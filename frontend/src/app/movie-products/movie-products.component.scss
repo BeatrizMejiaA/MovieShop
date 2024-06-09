@@ -8,8 +8,17 @@ ion-card.product-card {
 
 ion-card.product-card {
   width: 100%;
-  max-width: 300px; /* Reduce the max-width to scale down the card size */
-  margin: 5px auto; /* Center the card horizontally */
+  max-width: 300px;
+  margin: 5px auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+@media (min-width: 768px) {
+  ion-card.product-card {
+    max-width: 100%; /* Allow cards to stretch on larger screens */
+  }
 }
 
 ion-card img {
@@ -20,28 +29,30 @@ ion-card img {
 }
 
 ion-card-title {
-  font-size: 1em; /* Reduce font size */
+  font-size: 1em;
   font-weight: bold;
 }
 
 ion-card-content p {
   margin: 0;
-  font-size: 0.8em; /* Reduce font size */
+  font-size: 0.8em;
   color: #555;
 }
 
 ion-grid {
-  padding: 0 5px; /* Reduce padding */
+  padding: 0 5px;
 }
 
 ion-row {
-  margin-bottom: 5px; /* Reduce margin */
+  margin-bottom: 5px;
+  justify-content: center; /* Center align items in row */
 }
 
 ion-col {
   display: flex;
   flex-direction: column;
   align-items: center;
+  flex: 1; /* Allow column to stretch */
 }
 
 .loading-text {
