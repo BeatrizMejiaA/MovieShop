@@ -24,6 +24,7 @@ import { AssignProductsToMoviesComponent } from './menu-partner/assign-products-
 import { MoviesAndProductsComponent } from './menu-partner/movies-and-products/movies-and-products.component';
 import { UserMenuComponent } from './user-menu/user-menu.component';
 import { AuthService } from './auth.service';
+import {MenuModule} from "./menu/menu.module";
 
 
 @NgModule({
@@ -44,14 +45,15 @@ import { AuthService } from './auth.service';
     UserMenuComponent
 
   ],
-  imports: [
-    BrowserModule,
-    IonicModule.forRoot(),
-    AppRoutingModule,
-    HttpClientModule,
-    FormsModule,
-    ReactiveFormsModule
-  ],
+    imports: [
+        BrowserModule,
+        IonicModule.forRoot(),
+        AppRoutingModule,
+        HttpClientModule,
+        FormsModule,
+        ReactiveFormsModule,
+        MenuModule
+    ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy },AuthService],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]

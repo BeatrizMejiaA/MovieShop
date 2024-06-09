@@ -1,9 +1,15 @@
+<app-menu></app-menu>
 
 <ion-content>
-  <div class="container">
-    <h2>Welcome to MovieShop</h2>
-    <p>Please select your role:</p>
-    <ion-button expand="full" (click)="loginAsUser()">Login as User</ion-button>
-    <ion-button expand="full" (click)="loginAsPartner()">Login as Partner</ion-button>
+  <div class="login-container">
+    <ion-text>Choose a profile to login</ion-text>
+    <ion-button fill="solid" class="login-button" (click)="loginAsUser()">
+      <ion-icon slot="start" name="person-circle"></ion-icon>
+      Login as User
+    </ion-button>
+    <ion-button fill="solid" class="login-button" (click)="loginAsPartner()">
+      <ion-icon slot="start" name="person-circle"></ion-icon>
+      Login as Partner
+    </ion-button>
   </div>
 </ion-content>

@@ -1,4 +1,4 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar class="navBar">
     <ion-buttons slot="start">
       <div class="logo"></div>
@@ -10,15 +10,15 @@
       <ion-button *ngIf="isLoggedIn" (click)="navigateToUserOrders()">User Orders</ion-button>
       <ion-button (click)="goToPartner()">Become a partner</ion-button>
       <ion-button (click)="goToAbout()">About</ion-button>
-      <ion-button *ngIf="!isLoggedIn" fill="solid" (click)="goToLogin()">
+      <ion-button *ngIf="!isLoggedIn" (click)="goToLogin()">
         <ion-icon slot="start" name="person-circle"></ion-icon>
         Login
       </ion-button>
-      <ion-button *ngIf="!isLoggedIn" fill="solid" (click)="goToSignUp()">
+      <ion-button *ngIf="!isLoggedIn" (click)="goToSignUp()">
         <ion-icon slot="start" name="person-circle"></ion-icon>
         Sign Up
       </ion-button>
-      <ion-button *ngIf="isLoggedIn" fill="solid" (click)="logout()">
+      <ion-button *ngIf="isLoggedIn" (click)="logout()">
         <ion-icon slot="start" name="log-out"></ion-icon>
         Logout
       </ion-button>
