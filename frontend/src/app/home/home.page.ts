@@ -22,7 +22,7 @@ export class HomePage implements OnInit {
 
   ngOnInit() {
 
-}
+  }
 
   searchMovie() {
     const apiUrl =

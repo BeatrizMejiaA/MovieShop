@@ -1,14 +1,52 @@
-.logo{
-  width: 100px; /* Adjust as needed */
-  height: 100px; /* Adjust as needed */
-  border-radius: 50%;
-  object-fit: cover;
-  margin-bottom: 1.5rem;
+.logo {
+  width: 300px;
+  height: 100px;
+  background-image: url('../../assets/images/logo.jpg');
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+/* Logo size and image for mobile devices */
+@media (max-width: 600px) {
+  .logo {
+    width: 100px; /* Adjust as necessary */
+    height: 50px;
+    background-image: url('../../assets/images/logo-small.png');
+  }
 }
 
 ion-header ion-toolbar.navBar {
   background-color: var(--nav-bar-background-color) !important;
 }
 
+.navBar {
+  --background: #f1f3f2;
+}
+
+@media (max-width: 600px) {
+  .navBar {
+    padding: 10px; /* Add padding for better touch targets */
+  }
+
+  ion-buttons {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  ion-buttons ion-button {
+    flex: 1 1 auto;
+    margin: 5px;
+    font-size: 14px;
+  }
+}
+
+/* Optional: Additional styles for header buttons */
+ion-header {
+  --background: #f1f3f2;
+}
+
+ion-toolbar {
+  --background: #f1f3f2;
+}
 
 
