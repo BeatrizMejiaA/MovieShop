@@ -1,16 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AlertController } from '@ionic/angular';
-
 interface Product {
-  name: string;
   createdAt: number;
   id: string;
+  name: string;
+  price: string;
   shippingPrice: string;
   photos: { url: string }[];
-  price: string;
 }
-
 interface Merchant {
   lastName: string;
   zipCode: string;
@@ -28,7 +26,6 @@ interface Merchant {
   id: string;
   updatedAt: number;
 }
-
 interface User {
   lastName: string;
   zipCode: string;
@@ -44,7 +41,6 @@ interface User {
   id: string;
   state: string;
 }
-
 interface Order {
   createdAt: number;
   product: Product;
@@ -54,12 +50,11 @@ interface Order {
   user: User;
   status: string;
 }
-
 interface MerchantOrders {
   orders: Order[];
+  products: Product[];
   id: string;
 }
-
 @Component({
   selector: 'app-see-orders',
   templateUrl: './see-orders.component.html',
@@ -68,17 +63,14 @@ interface MerchantOrders {
 export class SeeOrdersComponent implements OnInit {
   merchants: MerchantOrders[] = [];
   email: string = '';
-
   constructor(
     private http: HttpClient,
     private alertController: AlertController
   ) {}
-
   async ngOnInit() {
     this.email = (await localStorage.getItem('email')) as string;
     this.fetchOrders();
   }
-
   fetchOrders() {
     this.http
       .get<MerchantOrders[]>(
@@ -87,13 +79,13 @@ export class SeeOrdersComponent implements OnInit {
       .subscribe(
         (data) => {
           this.merchants = data;
+          console.log(this.merchants)
         },
         (error) => {
           console.error('Error fetching orders:', error);
         }
       );
   }
-
   async updateStatus(
     orderId: string,
     customerEmail: string,
@@ -103,12 +95,10 @@ export class SeeOrdersComponent implements OnInit {
       status: newStatus,
     };
     const token = (await localStorage.getItem('token')) as string;
-
     const headers = new HttpHeaders({
       Authorization: `Bearer ${token}`,
       'Content-Type': 'application/json',
     });
-
     this.http
       .put(
         `https://ew99t2gt72.execute-api.eu-central-1.amazonaws.com/movieshop-nl-dev/users/${customerEmail}/orders/${orderId}`,

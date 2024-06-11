@@ -128,7 +128,7 @@ export class UserOrdersComponent implements OnInit {
 
   async submitPayment(orderId: string) {
     const order = this.orders.find((o) => o.id === orderId);
-    if (order && order.paypalemail ) {
+    if (order ) {
       const apiUrl = `https://ew99t2gt72.execute-api.eu-central-1.amazonaws.com/movieshop-nl-dev/users/${this.useremail}/orders/${orderId}`;
       const paymentData = {
         status: 'PAYED',

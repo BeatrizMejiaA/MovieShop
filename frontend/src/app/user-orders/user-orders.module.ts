@@ -15,8 +15,8 @@ import { FormsModule } from '@angular/forms';
     FormsModule,
     CommonModule,
     UserOrdersRoutingModule,
-    MenuModule, // Include MenuModule here
+    MenuModule,
   ],
-  declarations: [UserOrdersComponent], // Declare UserOrdersComponent
+  declarations: [UserOrdersComponent],
 })
 export class UserOrdersModule {}
