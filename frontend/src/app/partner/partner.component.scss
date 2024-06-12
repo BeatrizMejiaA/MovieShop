@@ -1,40 +1,52 @@
 .partner-grid {
   height: 100%;
-  padding: 1rem;
+  padding: 0rem;
 }
 
 .partner-container {
   background: #ffffff;
-  padding: 2rem;
+  padding: 1rem;
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease-in-out;
   width: 100%;
+  max-width: 1200px; // Set a max-width for better layout control
+  height: auto; // Allow the height to adjust based on content
   margin: 0 auto;
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .partner-image {
   width: 100%;
-  height: auto;
+  max-height: 300px; // Set a max height to prevent it from being too large
   border-radius: 10px;
-  margin-bottom: 1.5rem;
+  margin-bottom: 0rem;
+  object-fit: cover; // Ensure the image covers the container without stretching
 }
 
 .partner-container h2 {
   font-size: 2rem;
-  margin-bottom: 1rem;
+  margin-bottom: 0rem;
   color: #333;
+  width: 100%;
+  text-align: center; // Center align text horizontally
 }
 
 .partner-container p {
   font-size: 1.2rem;
   color: #666;
   margin-bottom: 2rem;
+  width: 100%;
+  text-align: center; // Center align text horizontally
 }
 
 .partner-container ion-button {
   font-size: 1.2rem;
+  width: 100%;
+  max-width: 300px; // Optional: Set a max-width to buttons if needed
 }
 
 .partner-container:hover {

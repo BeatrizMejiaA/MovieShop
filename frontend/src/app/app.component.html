@@ -10,7 +10,7 @@
         <ion-menu-toggle auto-hide="true">
           <ion-item button (click)="goToMovies()">Movies</ion-item>
           <ion-item button *ngIf="isLoggedIn" (click)="navigateToPurchasedItems()">Purchased Items</ion-item>
-          <ion-item button *ngIf="isLoggedIn" (click)="navigateToUserOrders()">User Orders</ion-item>
+          <ion-item button *ngIf="isLoggedIn" (click)="navigateToUserOrders()">My Orders</ion-item>
           <ion-item button (click)="goToPartner()">Become a partner</ion-item>
           <ion-item button (click)="goToAbout()">About</ion-item>
           <ion-item button *ngIf="!isLoggedIn" (click)="goToLogin()">

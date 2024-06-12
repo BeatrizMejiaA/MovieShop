@@ -44,6 +44,10 @@ export class PartnerSignUpComponent implements OnInit {
 
   ngOnInit() {}
 
+  navigateToHome() {
+    this.router.navigate(['/']);
+  }
+
   passwordMatchValidator(form: FormGroup) {
     return form.controls['password'].value === form.controls['repeatpass'].value
       ? null
@@ -71,7 +75,8 @@ export class PartnerSignUpComponent implements OnInit {
         .subscribe(
           (response) => {
             console.log('API Response sign up partner:', response);
-            this.router.navigate(['/']);
+            this.router.navigate(['/login-partner']);
+            this.partnerForm.reset();
           },
           (error) => {
             // Handle API error

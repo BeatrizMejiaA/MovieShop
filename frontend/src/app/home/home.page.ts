@@ -17,10 +17,11 @@ export class HomePage implements OnInit {
 
 
   constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute) {
-    this.autocomplete = { input: '' };
+    this.autocomplete = { input: 'Spi' };
   }
 
   ngOnInit() {
+    this.searchMovie();
 
   }
 

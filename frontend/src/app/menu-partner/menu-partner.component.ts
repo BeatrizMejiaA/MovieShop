@@ -17,6 +17,9 @@ export class MenuPartnerComponent  implements OnInit {
   navigateTo(path: string) {
     this.router.navigate([`/menu-partner/${path}`]);
   }
+  navigateToHome() {
+    this.router.navigate(['/']);
+  }
 
 
   logOut() {
