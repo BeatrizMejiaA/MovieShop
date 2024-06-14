@@ -73,7 +73,12 @@ export class UserOrdersComponent implements OnInit {
     this.useremail = (await localStorage.getItem('useremail')) as string;
     this.getOrders().subscribe({
       next: (data: Order[]) => {
+        console.log(data)
         this.orders = data;
+        this.orders = this.orders.map(order => ({
+          ...order,
+          product: Array.isArray(order.product) ? order.product : []
+        }));
       },
       error: (error) => {
         console.error('Error fetching orders:', error);
@@ -85,8 +90,8 @@ export class UserOrdersComponent implements OnInit {
     return this.http
       .get<Order[]>(
         'https://ew99t2gt72.execute-api.eu-central-1.amazonaws.com/movieshop-nl-dev/users/' +
-          this.useremail +
-          '/orders'
+        this.useremail +
+        '/orders'
       )
       .pipe(
         catchError((error) => {
@@ -115,7 +120,7 @@ export class UserOrdersComponent implements OnInit {
           alert('Thank you for your purchase!');
         },
         error: (error) => {
-         alert('Please try again');
+          alert('Please try again');
         },
       });
     }
@@ -123,7 +128,7 @@ export class UserOrdersComponent implements OnInit {
 
   async submitPayment(orderId: string) {
     const order = this.orders.find((o) => o.id === orderId);
-    if (order ) {
+    if (order && order.merchant.emailPaypal ) {
       const apiUrl = `https://ew99t2gt72.execute-api.eu-central-1.amazonaws.com/movieshop-nl-dev/users/${this.useremail}/orders/${orderId}`;
       const paymentData = {
         status: 'PAYED',
