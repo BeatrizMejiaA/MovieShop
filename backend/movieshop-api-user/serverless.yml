@@ -15,7 +15,7 @@ provider:
     EMAIL: ${ssm:${self:custom.stage}-email-sender}
     CB_JWT_SECRET: ${ssm:${self:custom.stage}-jwt-secret}
     CB_TEMPLATE_EMAIL_AS: ${ssm:${self:custom.stage}-template-email-change-password}
-    CB_TEMPLATE_EMAIL_NS: ${ssm:${self:custom.stage}-template-email-new-password}
+    CB_TEMPLATE_EMAIL_NS: ${ssm:${self:custom.stage}-template-email-new-user}
 
 custom:
     allowed-headers:

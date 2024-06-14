@@ -220,7 +220,7 @@ module.exports.create = async (event, context, callback) => {
           const data1 = await dynamoDb.put(params2).promise();
           console.log(data1);
         } catch (err) {
-          const probs_context = MOVIESHOP.create_context(lambda,dynamoDb,process.env.CB_STAGE, 'en', 'insert_generic_visualproduction_error', 500,path);
+          const probs_context = MOVIESHOP.create_context(lambda,dynamoDb,process.env.CB_STAGE, 'en', 'insert_generic_visualproduction_error', 500,event.path);
           console.log(probs_context)
           const error_lam = await MOVIESHOP.create_error_message(probs_context);
           callback(null, error_lam);
@@ -266,21 +266,17 @@ module.exports.create = async (event, context, callback) => {
         }
 
         console.log("marcel1")
+        console.log(visualProductionItem.id)
         var alreadyExist = result.Item.visualproductions.filter(s => s.id === visualProductionItem.id);
         console.log("marcel2")
         if (alreadyExist.length > 0){ 
-          console.log("marcel3")
-          const probs_context = MOVIESHOP.create_context(lambda,dynamoDb,process.env.CB_STAGE, 'en', 'visualproduction_not_exists_error', 404,vent.path)
-          console.log(probs_context)
-          const error_lam = await MOVIESHOP.create_error_message(probs_context)
-          console.log("marcel4")
-          callback(null, error_lam);
-          return;
+          var theOthersVp = result.Item.visualproductions.filter(s => s.id != visualProductionItem.id);
+          theOthersVp.push(visualProductionItem)
+          result.Item.visualproductions = theOthersVp
+        } else {
+          result.Item.visualproductions.push(visualProductionItem);
         }
           
-
-          result.Item.visualproductions.push(visualProductionItem);
-
           const params3 = {
             TableName: process.env.CB_DYNAMO_DB_MERCHANTVISUALPRODUCTION,
             Item: {

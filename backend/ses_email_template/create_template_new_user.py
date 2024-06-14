@@ -10,7 +10,7 @@ BODY_HTML = str(object_content)
 
 response = ses.create_template(
   Template = {
-    'TemplateName' : 'movieshop_template_new_password_user',
+    'TemplateName' : 'movieshop_template_new_user',
     'SubjectPart'  : '[MOVIESHOP] - Welcome',
     'TextPart'     : '',
     'HtmlPart'     : BODY_HTML

@@ -26,7 +26,7 @@ variable "template_email_change_password" {
   
 }
 
-variable "template_email_new_password" {
+variable "template_email_new_user" {
   
 }
 

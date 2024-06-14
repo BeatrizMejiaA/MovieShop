@@ -4,7 +4,7 @@ module "users" {
     source = "../../infra/users"
     environment = var.environment
     movieshop_region = var.movieshop_region
-    template_email_new_password = var.template_email_new_password
+    template_email_new_user = var.template_email_new_user
     template_email_change_password = var.template_email_change_password
     write_capacity = 1
     read_capacity = 1
