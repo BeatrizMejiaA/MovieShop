@@ -48,7 +48,7 @@ interface User {
 
 interface Order {
   createdAt: number;
-  product: Product[];
+  product: Product;
   total: string;
   merchant: Merchant;
   id: string;
@@ -77,7 +77,7 @@ export class UserOrdersComponent implements OnInit {
         this.orders = data;
         this.orders = this.orders.map(order => ({
           ...order,
-          product: Array.isArray(order.product) ? order.product : []
+          product: order.product
         }));
       },
       error: (error) => {

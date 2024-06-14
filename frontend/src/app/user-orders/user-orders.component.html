@@ -21,14 +21,14 @@
 
         <h4>Products</h4>
         <ion-list>
-          <ion-item *ngFor="let product of order.product">
+          <ion-item>
             <ion-thumbnail slot="start">
-              <img *ngIf="product.photos && product.photos.length > 0" [src]="product.photos[0].url" alt="{{ product.name }} Image">
+              <img *ngIf="order.product.photos && order.product.photos.length > 0" [src]="order.product.photos[0].url" alt="{{ order.product.name }} Image">
             </ion-thumbnail>
             <ion-label>
-              <h5>{{ product.name }}</h5>
-              <p>Price: {{ product.price }}</p>
-              <p>Shipping Price: {{ product.shippingPrice }}</p>
+              <h5>{{ order.product.name }}</h5>
+              <p>Price: {{ order.product.price }}</p>
+              <p>Shipping Price: {{ order.product.shippingPrice }}</p>
             </ion-label>
           </ion-item>
         </ion-list>
