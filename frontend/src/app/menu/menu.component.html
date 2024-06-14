@@ -1,10 +1,27 @@
 <ion-header>
   <ion-toolbar class="navBar">
     <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
       <div class="logo"></div>
+    </ion-buttons>
+
+    <ion-buttons slot="end" class="nav-buttons">
+      <ion-button (click)="goToMovies()">Movies</ion-button>
+      <ion-button *ngIf="isLoggedIn" (click)="navigateToPurchasedItems()">Purchased Items</ion-button>
+      <ion-button *ngIf="isLoggedIn" (click)="navigateToUserOrders()">User Orders</ion-button>
+      <ion-button (click)="goToPartner()">Become a partner</ion-button>
+      <ion-button (click)="goToAbout()">About</ion-button>
+      <ion-button *ngIf="!isLoggedIn" (click)="goToLogin()">
+        <ion-icon slot="start" name="person-circle"></ion-icon>
+        Login
+      </ion-button>
+      <ion-button *ngIf="!isLoggedIn" (click)="goToSignUp()">
+        <ion-icon slot="start" name="person-circle"></ion-icon>
+        Sign Up
+      </ion-button>
+      <ion-button *ngIf="isLoggedIn" (click)="logout()">
+        <ion-icon slot="start" name="log-out"></ion-icon>
+        Logout
+      </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
-
-<ion-router-outlet id="main-content"></ion-router-outlet>

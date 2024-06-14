@@ -73,12 +73,7 @@ export class UserOrdersComponent implements OnInit {
     this.useremail = (await localStorage.getItem('useremail')) as string;
     this.getOrders().subscribe({
       next: (data: Order[]) => {
-        console.log(data)
         this.orders = data;
-        this.orders = this.orders.map(order => ({
-          ...order,
-          product: Array.isArray(order.product) ? order.product : []
-        }));
       },
       error: (error) => {
         console.error('Error fetching orders:', error);

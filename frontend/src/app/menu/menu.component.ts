@@ -1,4 +1,4 @@
-import { Component, ChangeDetectorRef, OnInit, AfterViewInit} from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
 
@@ -8,28 +8,22 @@ import { AuthService } from '../auth.service';
   styleUrls: ['./menu.component.scss']
 })
 
-export class MenuComponent implements OnInit, AfterViewInit {
+export class MenuComponent {
   isLoggedIn: boolean = false;
-  constructor(private router: Router,private authService: AuthService,private cdr: ChangeDetectorRef) {}
+  constructor(private router: Router,private authService: AuthService) {}
   ngOnInit() {
     this.isLoggedIn  = !!localStorage.getItem('usertoken');
     this.authService.isLoggedIn.subscribe(status => {
       this.isLoggedIn = status;
     });
-    this.cdr.detectChanges();
   }
 
-  ngAfterViewInit() {
-    // Additional setup logic if needed
-    this.cdr.detectChanges();
-  }
 
   verifyLogin(){
     this.authService.isLoggedIn.subscribe(status => {
       this.isLoggedIn = status;
     });
     //this.isLoggedIn  = !!localStorage.getItem('usertoken');
-    this.cdr.detectChanges(); // Manually trigger change detection
   }
 
  async goToMovies() {
@@ -45,7 +39,8 @@ export class MenuComponent implements OnInit, AfterViewInit {
 
   async goToPartner() {
     await this.verifyLogin();
-    await this.router.navigate(['/partner']);
+   await this.router.navigate(['/partner']);
+
   }
 
   async goToLogin() {
@@ -78,7 +73,6 @@ export class MenuComponent implements OnInit, AfterViewInit {
 
    await this.authService.logout();
     await this.router.navigate(['/']);
-   this.cdr.detectChanges(); // Manually trigger change detection
 
   }
 }
