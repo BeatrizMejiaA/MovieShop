@@ -3,31 +3,29 @@
     <ion-grid>
       <ion-row *ngFor="let movie of movies">
         <ion-col size="12">
-          <div class="movie-products-container">
+          <div class="movie-container">
+            <img [src]="movie.photo" alt="Movie Image" class="movie-image">
+            <div class="movie-details">
+              <h2>{{ movie.name }}</h2>
+            </div>
+          </div>
+        </ion-col>
+        <ion-col size="12">
+          <div class="products-container">
             <ion-row>
-              <ion-col size="4">
-                <div class="movie-container">
-                  <img [src]="movie.photo" alt="Movie Image" class="movie-image">
-                  <div class="movie-details">
-                    <h2>{{ movie.name }}</h2>
+              <div class="product-iteration-title">
+                <h2>Products</h2>
+              </div>
+              <div class="product-iteration">
+                <!-- Product columns wrapped inside a div for better control -->
+                <ion-col size="6" size-sm="4" size-md="3" size-lg="2" *ngFor="let product of movie.products">
+                  <div class="product-item">
+                    <img [src]="product.photos[0]?.url" alt="Product Image" class="product-image">
+                    <h3>{{ product.name }}</h3>
+                    <p>{{ product.price }}</p>
                   </div>
-                </div>
-              </ion-col>
-              <ion-col size="8">
-                <div class="products-container">
-                  <ion-grid>
-                    <ion-row>
-                      <ion-col size="6" size-sm="4" size-md="3" size-lg="2" *ngFor="let product of movie.products">
-                        <div class="product-item">
-                          <img [src]="product.photos[0]?.url" alt="Product Image" class="product-image">
-                          <h3>{{ product.name }}</h3>
-                          <p>{{ product.price }}</p>
-                        </div>
-                      </ion-col>
-                    </ion-row>
-                  </ion-grid>
-                </div>
-              </ion-col>
+                </ion-col>
+              </div>
             </ion-row>
           </div>
         </ion-col>

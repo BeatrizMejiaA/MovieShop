@@ -1,97 +1,188 @@
-ion-img {
-  margin-top: 200px !important;
-  height: 200px !important;
-  float: left !important;
-}
-
-ion-card-title {
-  padding-top: 10px !important;
-}
-
-.container {
-  margin-top: 200px; /* Default margin for small screens */
-}
-
-@media (min-width: 768px) {
-  .container {
-    margin-top: 70px; /* Margin for larger screens */
-  }
-}
-
-.movie-products-container {
-  border: 2px solid gray;
-  border-image: linear-gradient(45deg, #a9a9a9, #d3d3d3, #d3d3d3, #a9a9a9) 1;
-  padding: 2px;
-  border-radius: 10px;
+.product-iteration {
   display: flex;
-  flex-direction: column;
-  width: 100%;
-  height: 100%;
-  margin-bottom: 20px;
-}
-
-.movie-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  height: 120px;
-  text-align: center;
-}
-
-.movie-image {
-  width: 100%;
-  height: auto;
-  max-height: 150px;
-  object-fit: cover;
-}
-
-.movie-details {
-  margin-top: 10px;
-}
-
-.movie-details h2 {
-  font-size: 18px;
-  margin: 5px 0;
-}
-
-.products-container {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  width: 100%;
-}
-
-ion-grid {
-  width: 100%;
-}
-
-ion-row {
-  width: 100%;
-  flex: 1;
-  margin-bottom: 20px;
+  flex-wrap: wrap;
+  width: 100%; /* Ensures the div takes up the full width available */
 }
 
 .product-item {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  text-align: center;
+  align-items: center; /* Centers items horizontally */
+  justify-content: center; /* Centers content vertically */
   padding: 10px;
-  margin: 5px;
+  text-align: center;
 }
 
-.product-item h3 {
-  font-size: 14px;
-  margin: 5px 0;
+
+
+.movie-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Centers the content vertically */
+  align-items: center; /* Centers the content horizontally */
+  padding: 0px; /* Adds internal padding to prevent content from touching the borders */
+  margin-top: 0px; /* Ensures there's space above the container */
+  margin-bottom: 20px; /* Ensures there's space below the container */
+  border: 1px solid #d3d3d3; /* Light gray border for a subtle distinction */
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Optional: Adds a subtle shadow for depth */
+  width: auto; /* Adjusts width to fit the content */
+  max-width: 100%; /* Ensures the container does not exceed the width of its parent */
+}
+
+
+/* CSS applied globally or in the relevant component's CSS file */
+
+/* CSS applied globally or in the relevant component's CSS file */
+
+@media (min-width: 992px) { /* Targeting large screens */
+  ion-row {
+    display: flex;
+    flex-direction: row; /* Ensures horizontal layout */
+    align-items: start; /* Aligns items to the start of the container, pushing them to the top */
+    margin-top: 0px; /* Equal top margin to ensure they start below any top bar/navigation */
+  }
+
+  ion-col {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* Aligns content to the top of the column */
+    height: auto; /* Adjusts height based on its content, mainly the image */
+  }
+
+  .movie-container,
+  .products-container {
+    height: 100%; /* Ensures these containers take the full height of their parent column */
+    border: 1px solid #d3d3d3; /* Light gray border for a subtle distinction */
+  }
+
+  /* Specific adjustments for ion-item if they are not aligning properly */
+  ion-item {
+    width: 100%; /* Ensures ion-item takes full width of the column */
+    align-self: stretch; /* Stretches the item to fill the column width if not already */
+  }
+}
+
+.product-iteration {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%; /* Ensure this container takes full width */
+}
+
+.product-iteration ion-col {
+  flex: 1 1 calc(100% / var(--num-of-products)); /* Dynamic width */
+  max-width: 300px;
+  min-width: 300px; /* Minimum width to ensure visibility */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (min-width: 992px) { /* Large screens */
+
+  .product-iteration {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start; /* Aligns items to the start of the line */
+  }
+
+  .product-iteration ion-col {
+    /* Dynamically adjust the basis and max-width for each column */
+    flex: 1 1 calc(100% / var(--num-of-products)); /* Dynamically adjusts based on the number of products */
+    min-width: 300px;
+    max-width: 400px;
+  }
+
+  .product-item {
+    margin: 5px; /* Slight margin for spacing */
+    padding: 10px; /* Padding inside each product item */
+  }
+
+  .product-image {
+    width: 100%; /* Ensures the image fills the container */
+    height: auto; /* Maintains the aspect ratio */
+    object-fit: contain; /* Ensures the image is fully visible without being cropped */
+  }
+
+  .product-item h3 {
+    font-size: 1rem; /* Adjust font size to ensure it fits within two lines */
+    white-space: normal; /* Allows text wrapping */
+    overflow: hidden; /* Hides overflow text */
+    text-overflow: ellipsis; /* Adds ellipsis to overflow text */
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* Limit text to two lines */
+    -webkit-box-orient: vertical;
+  }
+}
+
+.movie-image {
+  width: auto; /* Maintains original width */
+  height: auto; /* Adjusts height to maintain aspect ratio */
+  max-width: 100%; /* Ensures the image does not exceed the width of the column */
+  object-fit: contain; /* Ensures the full image is displayed without cropping */
+}
+
+
+.products-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start; // Aligns products to the start of the container
 }
 
 .product-image {
   width: 100%;
+  max-width: 150px; // Controls the maximum width of product images
   height: auto;
-  max-height: 100px;
-  object-fit: cover;
+  object-fit: cover; // Ensures images are displayed properly without distortion
+  display: block; // Ensures proper margin handling
+  margin-left: auto; // Centers the image horizontally
+  margin-right: auto; // Centers the image horizontally
+  margin-top: 0px; // Top margin to clear the top bar, adjust based on your top bar's height
 }
 
-ion-col {
-  padding: 0;
+
+@media (min-width: 992px) { // Adjustments for larger screens
+  .movie-container {
+    align-items: center; // Keeps content centered even when it's on the left side of the layout
+  }
+
+  .products-container {
+    justify-content: space-between; // Distributes products evenly across the available space
+  }
+}
+
+@media (max-width: 768px) {
+  .movie-image {
+    margin-top: 50px; // Smaller margin for smaller screens if top bar is less tall
+  }
+}
+
+@media (min-width: 769px) {
+  .movie-image {
+    margin-top: 70px; // Larger margin for larger screens
+  }
+}
+
+@media (max-width: 768px) {
+  .product-image {
+    margin-top: 70px; // Smaller margin for smaller screens if the top bar is less tall
+  }
+}
+
+@media (min-width: 769px) {
+  .product-image {
+    margin-top: 90px; // Larger margin for larger screens
+  }
+}
+
+@media (max-width: 600px) {
+  ion-grid {
+    margin-top: 20px; /* Smaller top margin for smaller screens */
+  }
+}
+
+@media (min-width: 601px) {
+  ion-grid {
+    margin-top: 0px; /* Larger top margin for larger screens */
+  }
 }
