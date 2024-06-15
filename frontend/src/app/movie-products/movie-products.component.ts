@@ -60,6 +60,15 @@ export class MovieProductsComponent implements OnInit {
       }
     );
   }
+
+  navigateToHome() {
+    this.router.navigate(['/movies']);
+  }
+
+  becomePartner() {
+    this.router.navigate(['/partner-sign-up']);
+  }
+
   async buyProduct(
     productId: string,
     productName: string,

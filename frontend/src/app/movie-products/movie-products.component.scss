@@ -61,3 +61,17 @@ ion-col {
   color: #999;
   margin-top: 20px;
 }
+/* Global styles.css or in the specific component's CSS file */
+
+/* Button styling */
+ion-button {
+  max-width: 300px; /* Maximum width of the button */
+  width: 100%; /* Makes the button take up 100% of its container, up to the max-width */
+  margin: 0 auto; /* Centers the button horizontally */
+}
+
+@media (max-width: 360px) {
+  ion-button {
+    max-width: 280px; /* Slightly smaller buttons on very small screens */
+  }
+}

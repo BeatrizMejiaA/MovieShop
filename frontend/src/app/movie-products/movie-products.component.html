@@ -45,5 +45,12 @@
 </ion-content>
 
 <ion-content *ngIf="!movieData">
-  <p class="loading-text">Loading...</p>
+  <app-menu></app-menu>
+  <p class="loading-text">We have not found merchants offering products for this visual production</p>
+  <ion-button expand="block" (click)="navigateToHome()">
+    Continue searching...
+  </ion-button>
+
+  <p class="loading-text">If you manufacture a product that has been featured in a film or television series and are interested in offering it to others, we invite you to become a partner.</p>
+  <ion-button expand="block" color="primary" (click)="becomePartner()">Become a Partner</ion-button>
 </ion-content>
