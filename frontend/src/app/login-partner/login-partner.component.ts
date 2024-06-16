@@ -9,8 +9,8 @@ import { Router } from '@angular/router';
 })
 export class LoginPartnerComponent implements OnInit {
   //email: string = '';
-  email: string = 'lmejia@gmail.com';
-  password: string = '123';
+  email: string = '';
+  password: string = '';
   errorMessage: string = '';
 
   constructor(private http: HttpClient, private router: Router) {}

@@ -80,8 +80,6 @@ export class AssignProductsToMoviesComponent implements OnInit {
       );
   }
   fetchMovieData(movieId: string) {
-    // Replace with your actual API endpoint
-    // movieId = 'MVP-CLIMADOAMOR124'
     const apiUrl = `https://p8lh5fvcdi.execute-api.eu-central-1.amazonaws.com/movieshop-nl-dev/visualproductions/${movieId}`;
     this.http.get(apiUrl).subscribe(
       (response: any) => {
@@ -94,7 +92,6 @@ export class AssignProductsToMoviesComponent implements OnInit {
     );
   }
   deleteProduct(product: Product) {
-    // Add your delete product logic here
     console.log('Delete product:', product);
   }
   assignProductToMovie() {

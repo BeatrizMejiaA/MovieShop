@@ -47,8 +47,6 @@ export class MovieProductsComponent implements OnInit {
   }
 
   fetchMovieData(movieId: string) {
-    // Replace with your actual API endpoint
-    // movieId = 'MVP-CLIMADOAMOR124'
     const apiUrl = `https://p8lh5fvcdi.execute-api.eu-central-1.amazonaws.com/movieshop-nl-dev/visualproductions/${this.movieId}`;
     this.http.get(apiUrl).subscribe(
       (response: any) => {

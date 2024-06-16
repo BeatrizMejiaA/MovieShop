@@ -23,7 +23,7 @@ export class MenuComponent {
     this.authService.isLoggedIn.subscribe(status => {
       this.isLoggedIn = status;
     });
-    //this.isLoggedIn  = !!localStorage.getItem('usertoken');
+    
   }
 
  async goToMovies() {
