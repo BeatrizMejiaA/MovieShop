@@ -17,7 +17,8 @@ Before you begin, ensure you have the following installed on your system:
 3. **Node.js and npm**: Required to run and deploy Node.js microservices.
 4. **AWS CLI**: Required to interact with your AWS account from the command line.
 5. **Angular**: Used for the frontend development of the web application.
-   - Required Version: Angular v17
+   - Required Version: Angular ^v17
+   - Required version: @ionic/angular: ^8.0.0
 
 ## Installation
 
