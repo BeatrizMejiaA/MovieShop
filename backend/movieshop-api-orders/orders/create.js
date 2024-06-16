@@ -181,7 +181,7 @@ async function getProduct(merchant,product){
 
     var theProduct = result.Item.products.filter(s => s.id === product);    
 
-    return theProduct;
+    return theProduct[0];
   } catch (err) {
     return err
   }
