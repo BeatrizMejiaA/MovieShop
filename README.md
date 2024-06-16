@@ -72,6 +72,15 @@ Before you begin, ensure you have the following installed on your system:
    ```sh
    ng --version
    ```
+### 
+1, **Install Ionic CLI:**
+ ```sh
+   npm install -g @ionic/cli
+   ```
+2. **Verify Installation**:
+   ```sh
+   ionic --version
+   ```
 
 ## Setting Up the Infrastructure
 
