@@ -78,7 +78,7 @@ Before you begin, ensure you have the following installed on your system:
 
 1. **Navigate to the Terraform Directory**:
    ```sh
-   cd infrastructure/terraform
+   cd terraform
    ```
 
 2. **Initialize Terraform**:
@@ -88,12 +88,14 @@ Before you begin, ensure you have the following installed on your system:
 
 3. **Plan the Infrastructure**:
    ```sh
-   terraform plan -var-file="env/movieshop-nd-dev.tfvars"
+   cd terraform/environments/movieshop-dev
+   terraform plan
    ```
 
 4. **Apply the Infrastructure Configuration**:
    ```sh
-   terraform apply -var-file="env/movieshop-nd-dev.tfvars"
+   cd terraform/environments/movieshop-dev
+   terraform apply"
    ```
 
    This will create the necessary AWS resources for the MovieShop environment.
@@ -104,7 +106,7 @@ Before you begin, ensure you have the following installed on your system:
 
 1. **Navigate to the Microservice Directory**:
    ```sh
-   cd services/<microservice-folder>
+   cd movieshop-api-merchant
    ```
 
 2. **Deploy the Microservice**:
@@ -112,23 +114,23 @@ Before you begin, ensure you have the following installed on your system:
    sls deploy --stage movieshop-nl-dev
    ```
 
-   Repeat this step for each microservice folder within the `services` directory.
+   Repeat this step for each microservice folder within the directory.
 
 ## Project Structure
 
-- `infrastructure/terraform`: Contains Terraform configuration files for setting up AWS infrastructure.
-- `services`: Contains subdirectories for each microservice, each with its own Serverless Framework configuration.
+- `terraform/environments`: Contains Terraform configuration files for setting up AWS infrastructure.
+- `terraform/infra`: Contains subdirectories for each microservice infrastructure configuration, each with its own Serverless Framework configuration.
 
 ## Example
 
 Here is an example of deploying a specific microservice:
 
-1. **Navigate to the Authentication Microservice**:
+1. **Navigate to the Layer For Common Code**:
    ```sh
-   cd services/authentication
+   cd moviesshop-layers
    ```
 
-2. **Deploy the Authentication Microservice**:
+2. **Deploy the Layer common Code**:
    ```sh
    sls deploy --stage movieshop-nl-dev
    ```
@@ -140,9 +142,10 @@ Here is an example of deploying a specific microservice:
   terraform show
   ```
 
-- **Destroy Terraform Infrastructure**:
+- **Destroy Terraform Infrastructure on AWS**:
   ```sh
-  terraform destroy -var-file="env/movieshop-nd-dev.tfvars"
+  cd terraform/environments/movieshop-dev
+  terraform destroy"
   ```
 
 - **Invoke Serverless Functions Locally**:
